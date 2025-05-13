@@ -55,7 +55,7 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
       <ORPCContext.Provider value={orpc}>
         <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-          <div className="grid h-svh grid-rows-[auto_1fr]">
+          <div>
             <Header />
             <Outlet />
           </div>
@@ -84,11 +84,11 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   }
 
   return (
-    <main className="container mx-auto p-4 pt-16">
+    <main>
       <h1>{message}</h1>
       <p>{details}</p>
       {stack && (
-        <pre className="w-full overflow-x-auto p-4">
+        <pre>
           <code>{stack}</code>
         </pre>
       )}

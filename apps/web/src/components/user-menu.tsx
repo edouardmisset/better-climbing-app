@@ -17,7 +17,7 @@ export default function UserMenu() {
   const { data: session, isPending } = authClient.useSession()
 
   if (isPending) {
-    return <Skeleton className="h-9 w-24" />
+    return <Skeleton />
   }
 
   if (!session) {
@@ -33,14 +33,13 @@ export default function UserMenu() {
       <DropdownMenuTrigger asChild>
         <Button variant="outline">{session.user.name}</Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="bg-card">
+      <DropdownMenuContent>
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem>{session.user.email}</DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Button
             variant="destructive"
-            className="w-full"
             onClick={() => {
               authClient.signOut({
                 fetchOptions: {

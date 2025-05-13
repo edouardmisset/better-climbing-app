@@ -53,17 +53,14 @@ export default function Todos() {
   }
 
   return (
-    <div className="mx-auto w-full max-w-md py-10">
+    <div>
       <Card>
         <CardHeader>
           <CardTitle>Todo List</CardTitle>
           <CardDescription>Manage your tasks efficiently</CardDescription>
         </CardHeader>
         <CardContent>
-          <form
-            onSubmit={handleAddTodo}
-            className="mb-6 flex items-center space-x-2"
-          >
+          <form onSubmit={handleAddTodo}>
             <Input
               value={newTodoText}
               onChange={e => setNewTodoText(e.target.value)}
@@ -74,28 +71,21 @@ export default function Todos() {
               type="submit"
               disabled={createMutation.isPending || !newTodoText.trim()}
             >
-              {createMutation.isPending ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
-              ) : (
-                'Add'
-              )}
+              {createMutation.isPending ? <Loader2 /> : 'Add'}
             </Button>
           </form>
 
           {todos.isLoading ? (
-            <div className="flex justify-center py-4">
-              <Loader2 className="h-6 w-6 animate-spin" />
+            <div>
+              <Loader2 />
             </div>
           ) : todos.data?.length === 0 ? (
-            <p className="py-4 text-center">No todos yet. Add one above!</p>
+            <p>No todos yet. Add one above!</p>
           ) : (
-            <ul className="space-y-2">
+            <ul>
               {todos.data?.map(todo => (
-                <li
-                  key={todo.id}
-                  className="flex items-center justify-between rounded-md border p-2"
-                >
-                  <div className="flex items-center space-x-2">
+                <li key={todo.id}>
+                  <div>
                     <Checkbox
                       checked={todo.completed}
                       onCheckedChange={() =>
@@ -116,7 +106,7 @@ export default function Todos() {
                     onClick={() => handleDeleteTodo(todo.id)}
                     aria-label="Delete todo"
                   >
-                    <Trash2 className="h-4 w-4" />
+                    <Trash2 />
                   </Button>
                 </li>
               ))}

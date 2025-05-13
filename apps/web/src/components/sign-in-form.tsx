@@ -51,8 +51,8 @@ export default function SignInForm({
   }
 
   return (
-    <div className="mx-auto mt-10 w-full max-w-md p-6">
-      <h1 className="mb-6 text-center font-bold text-3xl">Welcome Back</h1>
+    <div>
+      <h1>Welcome Back</h1>
 
       <form
         onSubmit={e => {
@@ -60,12 +60,11 @@ export default function SignInForm({
           e.stopPropagation()
           void form.handleSubmit()
         }}
-        className="space-y-4"
       >
         <div>
           <form.Field name="email">
             {field => (
-              <div className="space-y-2">
+              <div>
                 <Label htmlFor={field.name}>Email</Label>
                 <Input
                   id={field.name}
@@ -76,9 +75,7 @@ export default function SignInForm({
                   onChange={e => field.handleChange(e.target.value)}
                 />
                 {field.state.meta.errors.map(error => (
-                  <p key={error?.message} className="text-red-500">
-                    {error?.message}
-                  </p>
+                  <p key={error?.message}>{error?.message}</p>
                 ))}
               </div>
             )}
@@ -88,7 +85,7 @@ export default function SignInForm({
         <div>
           <form.Field name="password">
             {field => (
-              <div className="space-y-2">
+              <div>
                 <Label htmlFor={field.name}>Password</Label>
                 <Input
                   id={field.name}
@@ -99,9 +96,7 @@ export default function SignInForm({
                   onChange={e => field.handleChange(e.target.value)}
                 />
                 {field.state.meta.errors.map(error => (
-                  <p key={error?.message} className="text-red-500">
-                    {error?.message}
-                  </p>
+                  <p key={error?.message}>{error?.message}</p>
                 ))}
               </div>
             )}
@@ -112,7 +107,6 @@ export default function SignInForm({
           {state => (
             <Button
               type="submit"
-              className="w-full"
               disabled={!state.canSubmit || state.isSubmitting}
             >
               {state.isSubmitting ? 'Submitting...' : 'Sign In'}
@@ -121,12 +115,8 @@ export default function SignInForm({
         </form.Subscribe>
       </form>
 
-      <div className="mt-4 text-center">
-        <Button
-          variant="link"
-          onClick={onSwitchToSignUp}
-          className="text-indigo-600 hover:text-indigo-800"
-        >
+      <div>
+        <Button variant="link" onClick={onSwitchToSignUp}>
           Need an account? Sign Up
         </Button>
       </div>
