@@ -24,6 +24,11 @@ export function meta(_params: Route.MetaArgs) {
 
 export default function Home() {
   const healthCheck = useQuery(orpc.healthCheck.queryOptions())
+  const { data: ascents, isLoading } = useQuery(
+    orpc.ascents.getAll.queryOptions(),
+  )
+
+  if (isLoading) return <div>Loading...</div>
 
   return (
     <div className="container mx-auto max-w-3xl px-4 py-2">
@@ -44,6 +49,11 @@ export default function Home() {
                   ? 'Connected'
                   : 'Disconnected'}
             </span>
+            {ascents?.map(ascent => (
+              <div key={ascent.id} className="mt-2">
+                <h3 className="text-lg font-semibold">{ascent.routeName}</h3>
+              </div>
+            ))}
           </div>
         </section>
       </div>

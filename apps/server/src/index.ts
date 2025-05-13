@@ -1,11 +1,8 @@
 import 'dotenv/config'
-import { google } from '@ai-sdk/google'
 import { RPCHandler } from '@orpc/server/fetch'
-import { streamText } from 'ai'
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { logger } from 'hono/logger'
-import { stream } from 'hono/streaming'
 import { auth } from './lib/auth'
 import { createContext } from './lib/context'
 import { appRouter } from './routers/index'
@@ -30,27 +27,12 @@ app.use('/rpc/*', async (c, next) => {
   const context = await createContext({ context: c })
   const { matched, response } = await handler.handle(c.req.raw, {
     prefix: '/rpc',
-    context: context,
+    context,
   })
   if (matched) {
     return c.newResponse(response.body, response)
   }
   await next()
-})
-
-app.post('/ai', async c => {
-  const body = await c.req.json()
-  const messages = body.messages || []
-
-  const result = streamText({
-    model: google('gemini-1.5-flash'),
-    messages,
-  })
-
-  c.header('X-Vercel-AI-Data-Stream', 'v1')
-  c.header('Content-Type', 'text/plain; charset=utf-8')
-
-  return stream(c, stream => stream.pipe(result.toDataStream()))
 })
 
 app.get('/', c => {

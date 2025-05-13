@@ -1,0 +1,16 @@
+{
+  "name": "@repo/schema",
+  "type": "module",
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc"
+  },
+  "exports": {
+    "./ascent": "./src/ascent.ts",
+    "./training": "./src/training.ts",
+    "./generic": "./src/generic.ts"
+  },
+  "devDependencies": {
+    "typescript": "latest"
+  }
+}
