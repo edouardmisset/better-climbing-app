@@ -101,8 +101,6 @@ export default function Todos() {
                     </label>
                   </div>
                   <Button
-                    variant="ghost"
-                    size="icon"
                     onClick={() => handleDeleteTodo(todo.id)}
                     aria-label="Delete todo"
                   >

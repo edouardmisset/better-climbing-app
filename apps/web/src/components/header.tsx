@@ -6,27 +6,24 @@ import UserMenu from './user-menu'
 export default function Header() {
   const links = [
     { to: '/', label: 'Home' },
+    { to: '/ascents', label: 'Ascents' },
     { to: '/dashboard', label: 'Dashboard' },
-    { to: '/todos', label: 'Todos' },
-    { to: '/ai', label: 'AI Chat' },
   ]
 
   return (
     <div>
       <div>
         <nav>
-          {links.map(({ to, label }) => {
-            return (
-              <NavLink
-                key={to}
-                to={to}
-                className={({ isActive }) => (isActive ? 'font-bold' : '')}
-                end
-              >
-                {label}
-              </NavLink>
-            )
-          })}
+          {links.map(({ to, label }) => (
+            <NavLink
+              key={to}
+              to={to}
+              className={({ isActive }) => (isActive ? 'font-bold' : '')}
+              end
+            >
+              {label}
+            </NavLink>
+          ))}
         </nav>
         <div>
           <ModeToggle />
