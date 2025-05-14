@@ -28,7 +28,7 @@ export function meta(_params: Route.MetaArgs) {
 export default function Home() {
   const healthCheck = useQuery(orpc.healthCheck.queryOptions())
   const { data: ascents, isLoading } = useQuery(
-    orpc.ascents.getAll.queryOptions(),
+    orpc.ascents.list.queryOptions(),
   )
 
   if (isLoading) return <div>Loading...</div>

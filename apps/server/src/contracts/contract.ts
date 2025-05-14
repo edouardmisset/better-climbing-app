@@ -5,7 +5,7 @@ import * as ascents from './ascents'
 export const contract = {
   ascents,
   healthCheck: orpcContract
-    .route({ method: 'GET', path: '/' })
+    .route({ method: 'GET', path: '/check' })
     .output(z.string()),
   privateData: orpcContract.route({ method: 'GET', path: '/private' }).output(
     z.object({
