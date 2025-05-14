@@ -183,7 +183,7 @@ export type Grade = z.infer<typeof gradeSchema>
 export const ASCENT_STYLE = ['Onsight', 'Flash', 'Redpoint'] as const
 export const CLIMBING_DISCIPLINE = ['Route', 'Boulder', 'Multi-Pitch'] as const
 const UNAVAILABLE_CLIMBING_DISCIPLINE: Set<Ascent['climbingDiscipline']> =
-  new Set(['Multi-Pitch'])
+  new Set(['Multi-Pitch'] as const)
 export const AVAILABLE_CLIMBING_DISCIPLINE = CLIMBING_DISCIPLINE.filter(
   d => !UNAVAILABLE_CLIMBING_DISCIPLINE.has(d),
 )

@@ -1,12 +1,16 @@
-import { ascentSchema } from '@repo/schema/ascent'
 import { db } from '../db'
-import { ascent } from '../db/schema/ascent'
+import { ascent, ascentSelectSchema } from '../db/schema/ascent'
 import { publicProcedure } from '../lib/orpc'
 
 export const ascentRouter = {
   getAll: publicProcedure.handler(async () => {
-    const ascentsFromDB = await db.select().from(ascent)
+    const ascentFromDB = await db.select().from(ascent)
+    const res = await ascentSelectSchema.array().spa(ascentFromDB)
 
-    return ascentSchema.array().parse(ascentsFromDB)
+    if (!res.success) {
+      console.error('Error parsing ascent data:', res.error)
+    }
+
+    return res.data ?? []
   }),
 }

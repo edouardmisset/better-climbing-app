@@ -19,7 +19,10 @@ const TITLE_TEXT = `
  `
 
 export function meta(_params: Route.MetaArgs) {
-  return [{ title: 'My App' }, { name: 'description', content: 'My App' }]
+  return [
+    { title: 'My C App' },
+    { name: 'description', content: 'My Climbing App' },
+  ]
 }
 
 export default function Home() {
@@ -37,11 +40,6 @@ export default function Home() {
         <section>
           <h2>API Status</h2>
           <div>
-            <div
-              className={`h-2 w-2 rounded-full ${
-                healthCheck.data ? 'bg-green-500' : 'bg-red-500'
-              }`}
-            />
             <span>
               {healthCheck.isLoading
                 ? 'Checking...'

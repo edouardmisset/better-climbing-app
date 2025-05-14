@@ -51,5 +51,8 @@
       "biome check --write ."
     ]
   },
-  "packageManager": "bun@1.2.12"
+  "packageManager": "bun@1.2.12",
+  "dependencies": {
+    "drizzle-zod": "^0.7.1"
+  }
 }
