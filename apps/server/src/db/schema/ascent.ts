@@ -1,5 +1,9 @@
 import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core'
-import { type BuildRefine, createSelectSchema } from 'drizzle-zod'
+import {
+  type BuildRefine,
+  createInsertSchema,
+  createSelectSchema,
+} from 'drizzle-zod'
 
 export const _GRADES = [
   '1a',
@@ -239,6 +243,16 @@ const ascentSchemaRefinements: BuildRefine<(typeof ascent)['_']['columns']> = {
 } as const
 
 export const ascentSelectSchema = createSelectSchema(
+  ascent,
+  ascentSchemaRefinements,
+)
+
+export const ascentInsertSchema = createInsertSchema(
+  ascent,
+  ascentSchemaRefinements,
+)
+
+export const ascentUpdateSchema = createInsertSchema(
   ascent,
   ascentSchemaRefinements,
 )

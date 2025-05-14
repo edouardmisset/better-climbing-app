@@ -5,7 +5,7 @@ import { cors } from 'hono/cors'
 import { logger } from 'hono/logger'
 import { auth } from './lib/auth'
 import { createContext } from './lib/context'
-import { appRouter } from './routers/index'
+import { router } from './routers/index'
 
 const app = new Hono()
 
@@ -22,7 +22,7 @@ app.use(
 
 app.on(['POST', 'GET'], '/api/auth/**', c => auth.handler(c.req.raw))
 
-const handler = new RPCHandler(appRouter)
+const handler = new RPCHandler(router)
 app.use('/rpc/*', async (c, next) => {
   const context = await createContext({ context: c })
   const { matched, response } = await handler.handle(c.req.raw, {

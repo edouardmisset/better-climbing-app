@@ -15,15 +15,17 @@
     "db:migrate": "drizzle-kit migrate"
   },
   "dependencies": {
-    "dotenv": "^16.4.7",
-    "zod": "^4.0.0-beta.20250505T195954",
-    "@orpc/server": "^1.2.0",
-    "@orpc/client": "^1.2.0",
-    "hono": "^4.7.9",
-    "drizzle-orm": "^0.38.4",
+    "@edouardmisset/math": "npm:@jsr/edouardmisset__math",
+    "@edouardmisset/text": "npm:@jsr/edouardmisset__text",
     "@libsql/client": "^0.14.0",
+    "@orpc/client": "^1.2.0",
+    "@orpc/server": "^1.2.0",
+    "@repo/schema": "workspace:*",
     "better-auth": "^1.2.7",
-    "@repo/schema": "workspace:*"
+    "dotenv": "^16.4.7",
+    "drizzle-orm": "^0.38.4",
+    "hono": "^4.7.9",
+    "zod": "^3.24.4"
   },
   "devDependencies": {
     "tsc-alias": "^1.8.11",
