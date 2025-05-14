@@ -3,9 +3,26 @@ import { validNumberWithFallback } from '@edouardmisset/math'
 import { oc as orpcContract } from '@orpc/contract'
 import { z } from 'zod'
 
+const optionalAscentFilterSchema = z
+  .object({
+    discipline: ascentSelectSchema.shape.discipline.optional(),
+    crag: ascentSelectSchema.shape.crag.optional(),
+    topoGrade: ascentSelectSchema.shape.topoGrade.optional(),
+    height: ascentSelectSchema.shape.height.optional(),
+    holds: ascentSelectSchema.shape.holds.optional(),
+    profile: ascentSelectSchema.shape.profile.optional(),
+    style: ascentSelectSchema.shape.style.optional(),
+    tries: ascentSelectSchema.shape.tries.optional(),
+    rating: ascentSelectSchema.shape.rating.optional(),
+    year: z.number().int().optional(),
+  })
+  .optional()
+
+export type OptionalAscentFilter = z.infer<typeof optionalAscentFilterSchema>
+
 export const list = orpcContract
   .route({ method: 'GET', path: '/ascents' })
-  // .input(optionalAscentFilterSchema)
+  .input(optionalAscentFilterSchema)
   .output(ascentSelectSchema.array())
 
 export const search = orpcContract

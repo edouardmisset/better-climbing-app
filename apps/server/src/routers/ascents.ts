@@ -1,10 +1,16 @@
 import { db } from '@/db'
+import { filterAscents } from '@/db/helpers/filter-ascents'
 import { ascent } from '@/db/schema/ascent'
 import { eq, like } from 'drizzle-orm'
 import { protectedProcedure, publicProcedure } from '../lib/orpc'
 
-export const list = publicProcedure.ascents.list.handler(async () => {
-  return await db.select().from(ascent)
+export const list = publicProcedure.ascents.list.handler(async ({ input }) => {
+  try {
+    return await filterAscents(input)
+  } catch (error) {
+    globalThis.console.log(`Failed to filter ascents: ${error}`)
+    return []
+  }
 })
 
 export const search = publicProcedure.ascents.search.handler(

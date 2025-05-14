@@ -1,4 +1,4 @@
-import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core'
+import { integer, sqliteTable as table, text } from 'drizzle-orm/sqlite-core'
 import {
   type BuildRefine,
   createInsertSchema,
@@ -203,24 +203,24 @@ export const PROFILES = [
 const DISCIPLINE = ['Route', 'Boulder', 'Multi-Pitch'] as const
 const ASCENT_STYLE = ['Onsight', 'Flash', 'Redpoint'] as const
 
-export const ascent = sqliteTable('ascent', {
-  area: text('area', { mode: 'text' }),
-  comments: text('comments', { mode: 'text' }),
-  crag: text('crag', { mode: 'text' }).notNull(),
-  date: integer({ mode: 'timestamp_ms' }).notNull(), // Date
-  discipline: text('discipline', { enum: DISCIPLINE }).notNull(),
-  height: integer('height', { mode: 'number' }),
-  holds: text('holds', { enum: HOLDS }),
-  profile: text('profile', { enum: PROFILES }),
-  id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
-  personalGrade: text('personalGrade', { enum: _GRADES }),
-  rating: integer('rating', { mode: 'number' }),
-  region: text('region', { mode: 'text' }),
+export const ascent = table('ascent', {
+  area: text({ mode: 'text' }),
+  comments: text({ mode: 'text' }),
+  crag: text({ mode: 'text' }).notNull(),
+  date: integer({ mode: 'timestamp' }).notNull(), // Date
+  discipline: text({ enum: DISCIPLINE }).notNull(),
+  height: integer({ mode: 'number' }),
+  holds: text({ enum: HOLDS }),
+  profile: text({ enum: PROFILES }),
+  id: integer({ mode: 'number' }).primaryKey({ autoIncrement: true }).unique(),
+  personalGrade: text('personal_grade', { enum: _GRADES }),
+  rating: integer({ mode: 'number' }),
+  region: text({ mode: 'text' }),
   routeName: text('route_name', { mode: 'text' }).notNull(),
-  points: integer('points', { mode: 'number' }).notNull(),
-  style: text('style', { enum: ASCENT_STYLE }).notNull(),
-  topoGrade: text('topoGrade', { enum: _GRADES }).notNull(),
-  tries: integer('tries', { mode: 'number' }).notNull(),
+  points: integer({ mode: 'number' }).notNull(),
+  style: text({ enum: ASCENT_STYLE }).notNull(),
+  topoGrade: text('topo_grade', { enum: _GRADES }).notNull(),
+  tries: integer({ mode: 'number' }).notNull(),
 })
 
 const ascentSchemaRefinements: BuildRefine<(typeof ascent)['_']['columns']> = {
@@ -246,6 +246,8 @@ export const ascentSelectSchema = createSelectSchema(
   ascent,
   ascentSchemaRefinements,
 )
+
+export type AscentSelectSchema = typeof ascentSelectSchema._type
 
 export const ascentInsertSchema = createInsertSchema(
   ascent,
