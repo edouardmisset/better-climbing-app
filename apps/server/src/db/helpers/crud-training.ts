@@ -47,9 +47,9 @@ export async function getTrainingSessions(options: OptionalTrainingFilter) {
 }
 
 export async function insertTrainingSession(
-  session: TrainingSessionInsertSchema,
+  ...sessions: TrainingSessionInsertSchema[]
 ) {
-  return await db.insert(trainingSession).values(session).returning()
+  return await db.insert(trainingSession).values(sessions).returning()
 }
 
 export async function getTrainingSessionById(

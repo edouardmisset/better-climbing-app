@@ -48,8 +48,8 @@ export async function getFilteredAscents(options: OptionalAscentFilter) {
       )
 }
 
-export async function insertAscent(input: AscentInsert) {
-  return await db.insert(ascent).values(input).returning()
+export async function insertAscent(...newAscent: AscentInsert[]) {
+  return await db.insert(ascent).values(newAscent).returning()
 }
 
 export async function getAscentById(id: AscentSelect['id']) {
