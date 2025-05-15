@@ -1,9 +1,11 @@
 import { oc as orpcContract } from '@orpc/contract'
 import { z } from 'zod'
 import * as ascents from './ascents'
+import * as trainingSessions from './training'
 
 export const contract = {
   ascents,
+  trainingSessions,
   healthCheck: orpcContract
     .route({ method: 'GET', path: '/check' })
     .output(z.string()),

@@ -1,9 +1,12 @@
+import { sql } from 'drizzle-orm'
 import { integer, sqliteTable as table, text } from 'drizzle-orm/sqlite-core'
 import {
   type BuildRefine,
   createInsertSchema,
   createSelectSchema,
+  createUpdateSchema,
 } from 'drizzle-zod'
+import type { z } from 'zod'
 
 export const _GRADES = [
   '1a',
@@ -200,24 +203,24 @@ export const PROFILES = [
   'Dihedral',
   'Traverse',
 ] as const
-const DISCIPLINE = ['Route', 'Boulder', 'Multi-Pitch'] as const
+export const DISCIPLINE = ['Route', 'Boulder', 'Multi-Pitch'] as const
 const ASCENT_STYLE = ['Onsight', 'Flash', 'Redpoint'] as const
 
 export const ascent = table('ascent', {
+  id: integer({ mode: 'number' }).primaryKey({ autoIncrement: true }).unique(),
   area: text({ mode: 'text' }),
   comments: text({ mode: 'text' }),
   crag: text({ mode: 'text' }).notNull(),
-  date: integer({ mode: 'timestamp' }).notNull(), // Date
+  date: text('date').default(sql`(CURRENT_DATE)`).notNull(),
   discipline: text({ enum: DISCIPLINE }).notNull(),
   height: integer({ mode: 'number' }),
   holds: text({ enum: HOLDS }),
-  profile: text({ enum: PROFILES }),
-  id: integer({ mode: 'number' }).primaryKey({ autoIncrement: true }).unique(),
   personalGrade: text('personal_grade', { enum: _GRADES }),
+  points: integer({ mode: 'number' }).notNull(),
+  profile: text({ enum: PROFILES }),
   rating: integer({ mode: 'number' }),
   region: text({ mode: 'text' }),
   routeName: text('route_name', { mode: 'text' }).notNull(),
-  points: integer({ mode: 'number' }).notNull(),
   style: text({ enum: ASCENT_STYLE }).notNull(),
   topoGrade: text('topo_grade', { enum: _GRADES }).notNull(),
   tries: integer({ mode: 'number' }).notNull(),
@@ -227,7 +230,7 @@ const ascentSchemaRefinements: BuildRefine<(typeof ascent)['_']['columns']> = {
   area: schema => schema.optional(),
   comments: schema => schema.optional(),
   crag: schema => schema.min(1),
-  date: schema => schema.transform(date => date.toISOString()),
+  date: schema => schema.transform(date => new Date(date).toISOString()),
   height: schema => schema.int().min(0).optional(),
   holds: schema => schema.optional(),
   id: schema => schema.int().min(0),
@@ -247,14 +250,18 @@ export const ascentSelectSchema = createSelectSchema(
   ascentSchemaRefinements,
 )
 
-export type AscentSelectSchema = typeof ascentSelectSchema._type
+export type AscentSelect = z.infer<typeof ascentSelectSchema>
 
 export const ascentInsertSchema = createInsertSchema(
   ascent,
   ascentSchemaRefinements,
 )
 
-export const ascentUpdateSchema = createInsertSchema(
+export type AscentInsert = z.infer<typeof ascentInsertSchema>
+
+export const ascentUpdateSchema = createUpdateSchema(
   ascent,
   ascentSchemaRefinements,
 )
+
+export type AscentUpdate = z.infer<typeof ascentUpdateSchema>

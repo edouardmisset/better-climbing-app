@@ -25,14 +25,15 @@ export const list = orpcContract
   .input(optionalAscentFilterSchema)
   .output(ascentSelectSchema.array())
 
+const ascentQueryParams = z.object({
+  query: z.string().min(1),
+  limit: z.string().transform(val => validNumberWithFallback(val, 10)),
+})
+export type AscentQueryParams = z.infer<typeof ascentQueryParams>
+
 export const search = orpcContract
   .route({ method: 'GET', path: '/ascents/search' })
-  .input(
-    z.object({
-      query: z.string().min(1),
-      limit: z.string().transform(val => validNumberWithFallback(val, 10)),
-    }),
-  )
+  .input(ascentQueryParams)
   .output(ascentSelectSchema.array())
 
 export const findById = orpcContract
