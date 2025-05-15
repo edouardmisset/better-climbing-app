@@ -90,9 +90,9 @@ export function fromEnergySystemToLabel(
 export const LOAD_CATEGORIES = ['High', 'Medium', 'Low'] as const
 export type LoadCategory = (typeof LOAD_CATEGORIES)[number]
 
-const sessionTypeSchema = z.enum(SESSION_TYPES)
-const energySystemSchema = z.enum(ENERGY_SYSTEMS)
-const anatomicalRegionSchema = z.enum(ANATOMICAL_REGIONS)
+const _sessionTypeSchema = z.enum(SESSION_TYPES)
+const _energySystemSchema = z.enum(ENERGY_SYSTEMS)
+const _anatomicalRegionSchema = z.enum(ANATOMICAL_REGIONS)
 
 export const trainingSession = table('training_session', {
   id: integer({ mode: 'number' }).primaryKey({ autoIncrement: true }).unique(),
