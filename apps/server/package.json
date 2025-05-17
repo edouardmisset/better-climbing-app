@@ -15,6 +15,8 @@
     "db:migrate": "drizzle-kit migrate"
   },
   "dependencies": {
+    "@edouardmisset/array": "npm:@jsr/edouardmisset__array",
+    "@edouardmisset/date": "npm:@jsr/edouardmisset__date",
     "@edouardmisset/math": "npm:@jsr/edouardmisset__math",
     "@edouardmisset/text": "npm:@jsr/edouardmisset__text",
     "@libsql/client": "^0.14.0",
@@ -26,6 +28,8 @@
     "better-auth": "^1.2.7",
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.38.4",
+    "google-auth-library": "^9.15.1",
+    "google-spreadsheet": "^4.1.4",
     "hono": "^4.7.9",
     "zod": "^3.24.4"
   },
