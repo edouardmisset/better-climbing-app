@@ -1,14 +1,17 @@
 import { createORPCClient } from '@orpc/client'
-import { RPCLink } from '@orpc/client/fetch'
+import type { ContractRouterClient } from '@orpc/contract'
+import type { JsonifiedClient } from '@orpc/openapi-client'
+import { OpenAPILink } from '@orpc/openapi-client/fetch'
 import { createORPCReactQueryUtils } from '@orpc/react-query'
 import type { RouterUtils } from '@orpc/react-query'
-import type { RouterClient } from '@orpc/server'
 import { QueryCache, QueryClient } from '@tanstack/react-query'
 import { createContext, use } from 'react'
 import { toast } from 'sonner'
-import type { router } from '../../../server/src/routers/index'
+import { contract } from '../../../server/src/contracts/contract'
 
-type ORPCReactUtils = RouterUtils<RouterClient<typeof router>>
+type ContractClient = JsonifiedClient<ContractRouterClient<typeof contract>>
+
+type ORPCReactUtils = RouterUtils<ContractClient>
 
 export const queryClient = new QueryClient({
   queryCache: new QueryCache({
@@ -25,7 +28,7 @@ export const queryClient = new QueryClient({
   }),
 })
 
-export const link = new RPCLink({
+export const link = new OpenAPILink(contract, {
   url: `${import.meta.env.VITE_SERVER_URL}/rpc`,
   fetch(url, options) {
     return fetch(url, {
@@ -35,7 +38,8 @@ export const link = new RPCLink({
   },
 })
 
-export const client: RouterClient<typeof router> = createORPCClient(link)
+export const client: JsonifiedClient<ContractRouterClient<typeof contract>> =
+  createORPCClient(link)
 
 export const orpc = createORPCReactQueryUtils(client)
 

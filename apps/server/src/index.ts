@@ -1,6 +1,7 @@
 import 'dotenv/config'
 import { OpenAPIHandler } from '@orpc/openapi/fetch'
 import { OpenAPIReferencePlugin } from '@orpc/openapi/plugins'
+import { onError } from '@orpc/server'
 import { BatchHandlerPlugin, CORSPlugin } from '@orpc/server/plugins'
 import { ZodSmartCoercionPlugin, ZodToJsonSchemaConverter } from '@orpc/zod'
 import { Hono } from 'hono'
@@ -15,7 +16,7 @@ import { auth } from './lib/auth'
 import { createContext } from './lib/context'
 import { router } from './routers/index'
 
-const ENV = process.env.NODE_ENV || 'production'
+const ENV = process.env.ENV || 'production'
 
 const app = new Hono()
 
@@ -47,6 +48,7 @@ const handler = new OpenAPIHandler(router, {
     }),
     new BatchHandlerPlugin(),
   ],
+  interceptors: [onError(error => globalThis.console.error(error))],
 })
 app
   .use('/rpc/*', async (c, next) => {
@@ -60,9 +62,6 @@ app
 
     await next()
   })
-  // .get('/', c => {
-  //   return c.text('OK')
-  // })
   .notFound(c => {
     const notFoundMessage = 'Route Not Found'
     globalThis.console.log(notFoundMessage, c.req.url)
@@ -70,6 +69,6 @@ app
   })
 
 if (ENV === 'production') app.use(etag({ weak: true }), csrf(), compress())
-if (ENV === 'dev') app.use(timing(), logger())
+if (ENV === 'development') app.use(timing(), logger())
 
 export default app

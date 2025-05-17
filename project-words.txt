@@ -8,6 +8,7 @@ droite
 Edouard
 edouardmisset
 gauche
+jsonified
 Misset
 nuqs
 NuqsAdapter
@@ -15,6 +16,8 @@ onsight
 Onsight
 onsighted
 Onsighting
+orpc
+ORPC
 patagonia
 poku
 qrcode
