@@ -1,0 +1,8 @@
+.loader {
+  block-size: 100%;
+  inline-size: 100%;
+  background-color: color-mix(in oklch, var(--surface-1) 30%, transparent);
+  font-weight: var(--font-weight-8);
+  font-size: var(--font-size-fluid-3);
+  color: var(--text-1);
+}

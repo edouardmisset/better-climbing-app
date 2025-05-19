@@ -1,0 +1,18 @@
+.card {
+  --_light-background: oklch(from var(--accent) l c h / 10%);
+  --_dark-background: oklch(from var(--accent) l c h / 20%);
+  --_background-color: light-dark(
+    var(--_light-background),
+    var(--_dark-background)
+  );
+
+  inline-size: 100%;
+  block-size: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: var(--size-fluid-2);
+  border-radius: var(--radius-conditional-3);
+  background: var(--surface-2);
+  box-shadow: 0 4px 0 oklch(from var(--surface-2) calc(l + 0.2) c h / 20%);
+  overflow: hidden;
+}

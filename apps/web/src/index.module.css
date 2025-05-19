@@ -1,0 +1,46 @@
+.body {
+  isolation: isolate;
+  display: flex;
+  flex-direction: row;
+  block-size: 100dvh;
+}
+
+.header {
+  @media (width <= 640px) {
+    position: absolute;
+
+    inset-block-start: 0;
+    inset-inline-end: 0;
+
+    background-color: transparent;
+  }
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--size-3);
+
+  background-color: var(--surface-2);
+  padding-block-start: var(--size-3);
+
+  & > * {
+    inline-size: 100%;
+  }
+}
+
+.main {
+  flex: 1;
+  overflow: auto;
+}
+
+.themeToggle {
+  margin-top: auto;
+  padding: var(--size-fluid-0);
+  background: transparent;
+  border: 1px solid var(--gray-5);
+
+  @media (width <= 640px) {
+    display: none;
+  }
+}
