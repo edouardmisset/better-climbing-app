@@ -1,4 +1,4 @@
-import type { Ascent } from '@repo/schema/ascent'
+import type { Ascent } from '@repo/db-schema/ascent'
 import { assert, describe, it } from 'poku'
 import { displayGrade } from './display-grade'
 

@@ -1,10 +1,10 @@
 import {
-  type Ascent,
   BOULDERING_BONUS_POINTS,
   GRADE_TO_POINTS,
   type Grade,
   STYLE_TO_POINTS,
-} from '@repo/schema/ascent'
+} from '@repo/db-schema/constants/ascent'
+import type { Ascent } from '@repo/db-schema/schema/ascent'
 
 /**
  * Converts a climbing ascent to its corresponding points value.
@@ -14,19 +14,19 @@ import {
  * @param {Ascent} params - The ascent object containing climb details.
  * @param {Grade} params.topoGrade - The topo grade of the ascent.
  * @param {string} params.style - The style of the ascent.
- * @param {string} params.climbingDiscipline - The discipline of the climb.
+ * @param {string} params.discipline - The discipline of the climb.
  * @returns {number} The total points for the ascent.
  */
 export function fromAscentToPoints({
   topoGrade,
   style,
-  climbingDiscipline,
+  discipline,
 }: Ascent): number {
   const gradePoints =
     GRADE_TO_POINTS[topoGrade as keyof typeof GRADE_TO_POINTS] ?? 0
   const stylePoints = STYLE_TO_POINTS[style] ?? 0
   const climbingDisciplineBonus =
-    climbingDiscipline === 'Boulder' ? BOULDERING_BONUS_POINTS : 0
+    discipline === 'Boulder' ? BOULDERING_BONUS_POINTS : 0
 
   return gradePoints + stylePoints + climbingDisciplineBonus
 }
@@ -50,15 +50,15 @@ export function fromAscentToPoints({
  */
 export function fromPointToGrade(
   points: number,
-  to?: Pick<Partial<Ascent>, 'climbingDiscipline' | 'style'>,
+  to?: Pick<Partial<Ascent>, 'discipline' | 'style'>,
 ): Grade {
-  const { climbingDiscipline = 'Route', style = 'Redpoint' } = to ?? {}
+  const { discipline = 'Route', style = 'Redpoint' } = to ?? {}
 
   const listOfPoints = Object.values(GRADE_TO_POINTS)
 
   const adjustedPoints = (points -
     (STYLE_TO_POINTS[style] ?? 0) -
-    (climbingDiscipline === 'Boulder'
+    (discipline === 'Boulder'
       ? BOULDERING_BONUS_POINTS
       : 0)) as (typeof listOfPoints)[number]
 

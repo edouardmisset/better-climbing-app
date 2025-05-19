@@ -44,6 +44,8 @@
     "zod": "^3.24.4"
   },
   "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+
     "@react-router/dev": "^7.4.1",
     "@tanstack/react-query-devtools": "^5.69.0",
     "@tauri-apps/cli": "^2.4.0",

@@ -5,7 +5,7 @@ import {
 import { displayGrade } from '@/helpers/display-grade'
 import { frenchNumberFormatter } from '@/helpers/number-formatter'
 import { sum } from '@edouardmisset/math'
-import type { Ascent } from '@repo/schema/ascent'
+import type { Ascent } from '@repo/db-schema/ascent'
 import { useMemo } from 'react'
 import { Card } from '../../card/card'
 import { SCORE_INCREMENT } from '../constants'

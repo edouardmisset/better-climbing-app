@@ -20,19 +20,6 @@ const ENV = process.env.ENV || 'production'
 
 const app = new Hono()
 
-app.use(
-  '/*',
-  cors({
-    origin: process.env.CORS_ORIGIN || '',
-    allowMethods: ['GET', 'POST', 'OPTIONS'],
-    allowHeaders: ['Content-Type', 'Authorization'],
-    credentials: true,
-  }),
-  trimTrailingSlash(),
-)
-
-app.on(['POST', 'GET'], '/api/auth/**', c => auth.handler(c.req.raw))
-
 const handler = new OpenAPIHandler(router, {
   plugins: [
     new CORSPlugin({ exposeHeaders: ['Content-Disposition'] }),
@@ -50,6 +37,20 @@ const handler = new OpenAPIHandler(router, {
   ],
   interceptors: [onError(error => globalThis.console.error(error))],
 })
+
+app.use(
+  '/*',
+  cors({
+    origin: process.env.CORS_ORIGIN || '',
+    allowMethods: ['GET', 'POST', 'OPTIONS'],
+    allowHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
+  }),
+  trimTrailingSlash(),
+)
+
+app.on(['POST', 'GET'], '/api/auth/**', c => auth.handler(c.req.raw))
+
 app
   .use('/rpc/*', async (c, next) => {
     const context = await createContext({ context: c })

@@ -1,4 +1,4 @@
-import type { Ascent } from '@repo/schema/ascent'
+import type { Ascent } from '@repo/db-schema/ascent'
 
 type ClimbingActivity =
   `${Lowercase<Ascent['climbingDiscipline']> | 'ascent'}${'s' | ''}`

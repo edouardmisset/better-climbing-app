@@ -1,5 +1,5 @@
-import type { Ascent } from '@repo/schema/ascent'
-import type { TrainingSession } from '@repo/schema/training'
+import type { Ascent } from '@repo/db-schema/ascent'
+import type { TrainingSession } from '@repo/db-schema/training'
 import { type DATE_TIME_OPTIONS, formatDateTime } from './format-date'
 import { formatOrdinals } from './format-plurals'
 

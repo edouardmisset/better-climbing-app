@@ -1,6 +1,6 @@
 import { DEFAULT_GRADE } from '@/constants/ascents'
 import { invert } from '@edouardmisset/object'
-import { GRADE_TO_NUMBER, type Grade } from '@repo/schema/ascent'
+import { GRADE_TO_NUMBER, type Grade } from '@repo/db-schema/ascent'
 
 export const NUMBER_TO_GRADE = invert(GRADE_TO_NUMBER)
 

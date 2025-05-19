@@ -3,7 +3,7 @@ import { filterAscents } from '@/helpers/filter-ascents'
 import { frenchNumberFormatter } from '@/helpers/number-formatter'
 import { average } from '@edouardmisset/math'
 import { sum } from '@edouardmisset/math/sum.ts'
-import type { Ascent } from '@repo/schema/ascent'
+import type { Ascent } from '@repo/db-schema/ascent'
 import { AscentsWithPopover } from '../../ascents-with-popover/ascents-with-popover'
 import { Card } from '../../card/card'
 

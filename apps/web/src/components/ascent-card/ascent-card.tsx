@@ -11,7 +11,7 @@ import {
   prettyLongDate,
 } from '@/helpers/formatters'
 import { wrapInParentheses } from '@edouardmisset/text'
-import type { Ascent } from '@repo/schema/ascent'
+import type { Ascent } from '@repo/db-schema/ascent'
 import { type CSSProperties, useMemo } from 'react'
 import styles from './ascent-card.module.css'
 

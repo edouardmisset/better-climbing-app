@@ -1,4 +1,4 @@
-import type { Ascent, Grade } from '@repo/schema/ascent'
+import type { Ascent, Grade } from '@repo/db-schema/ascent'
 
 /**
  * @param params - The parameters for displaying the grade.

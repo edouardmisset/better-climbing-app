@@ -2,7 +2,7 @@ import {
   getTrainingSessionById,
   getTrainingSessions,
   insertTrainingSession,
-} from '@/db/helpers/crud-training'
+} from '@repo/db-schema/helpers/training'
 import { protectedProcedure, publicProcedure } from '../lib/orpc'
 
 export const list = publicProcedure.trainingSessions.list.handler(

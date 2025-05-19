@@ -2,47 +2,74 @@ import {
   BOULDERING_BONUS_POINTS,
   GRADE_TO_POINTS,
   STYLE_TO_POINTS,
-} from '@repo/schema/ascent'
+} from '@repo/db-schema/constants/ascent'
+import type { Ascent } from '@repo/db-schema/schema/ascent'
 import { assert, describe, it } from 'poku'
-import { sampleAscents } from '~/backup/sample-ascents'
-import { DEFAULT_GRADE } from '~/constants/ascents'
-import {
-  fromAscentToPoints,
-  fromGradeToBackgroundColor,
-  fromGradeToClassName,
-  fromPointToGrade,
-} from './ascent-converter'
+import { fromAscentToPoints, fromPointToGrade } from './ascent-converter'
 
-describe('fromGradeToBackgroundColor', () => {
-  it('should return black when grade is undefined', () => {
-    const result = fromGradeToBackgroundColor(undefined)
-    assert.equal(result, 'black')
-  })
+const DEFAULT_GRADE = '1a'
 
-  it('should return the correct background color based on grade', () => {
-    const result = fromGradeToBackgroundColor('7a+')
-    assert.equal(result, 'var(--7a_)')
-  })
-})
+const onsight7a = {
+  area: 'Wig Wam',
+  discipline: 'Route',
+  comments: 'À la fois superbe grimpe et passage terrifiant. ',
+  crag: 'Ewige Jagdgründe',
+  date: '2024-10-27T12:00:00.000Z',
+  height: 25,
+  holds: 'Crimp',
+  personalGrade: '6c+',
+  profile: 'Arête',
+  rating: 4,
+  routeName: 'Black Knight',
+  style: 'Onsight',
+  topoGrade: '7a',
+  tries: 1,
+  region: 'Hautes-Alpes',
+  points: 850,
+  id: 1,
+} satisfies Ascent
 
-describe('fromGradeToClassName', () => {
-  it('should return undefined when grade is undefined', () => {
-    const result = fromGradeToClassName(undefined)
-    assert.equal(result, undefined)
-  })
-
-  it('should return a class name with underscores replacing plus signs', () => {
-    const result = fromGradeToClassName('7a+')
-    assert.equal(result, '_7a_')
-  })
-})
+const redpoint7b = {
+  area: 'Envers du canyon',
+  discipline: 'Route',
+  comments: 'Dur :(',
+  crag: 'Rue des masques',
+  date: '2023-08-01T12:00:00.000Z',
+  height: 25,
+  holds: 'Pocket',
+  personalGrade: '7b+',
+  profile: 'Overhang',
+  rating: 3,
+  region: 'Hautes-Alpes',
+  routeName: 'Flash dans ta gueule',
+  style: 'Redpoint',
+  topoGrade: '7b',
+  points: 800,
+  tries: 2,
+  id: 2,
+} satisfies Ascent
+const flash7aBoulder = {
+  area: 'Franchard Hautes Plaines',
+  discipline: 'Boulder',
+  crag: 'Fontainebleau',
+  date: '2023-07-01T12:00:00.000Z',
+  holds: 'Sloper',
+  personalGrade: '7a',
+  profile: 'Arête',
+  rating: 4,
+  region: 'Seine-et-Marne',
+  routeName: 'Bossanova',
+  style: 'Flash',
+  topoGrade: '7a',
+  comments: 'Pas si facile que ça !',
+  height: 4,
+  points: 800,
+  tries: 1,
+  id: 25,
+} satisfies Ascent
 
 describe('fromAscentToPoints', () => {
   it('should return the sum of grade and style points when both keys exist', () => {
-    const onsight7a = sampleAscents[0]
-    const redpoint7b = sampleAscents[1]
-    const flash7aBoulder = sampleAscents[24]
-
     if (!onsight7a || !redpoint7b || !flash7aBoulder) {
       throw new Error('Ascent not found')
     }
@@ -85,7 +112,7 @@ describe('fromPointToGrade', () => {
     const pointsWith7aBoulderBonus = pointsFor7a + BOULDERING_BONUS_POINTS
     assert.equal(
       fromPointToGrade(pointsWith7aBoulderBonus, {
-        climbingDiscipline: 'Boulder',
+        discipline: 'Boulder',
       }),
       '7a',
     )
@@ -113,7 +140,7 @@ describe('fromPointToGrade', () => {
     const combinedPoints = pointsFor7a + flashPoints + BOULDERING_BONUS_POINTS
     assert.equal(
       fromPointToGrade(combinedPoints, {
-        climbingDiscipline: 'Boulder',
+        discipline: 'Boulder',
         style: 'Flash',
       }),
       '7a',
@@ -131,13 +158,13 @@ describe('fromPointToGrade', () => {
   })
 
   it('should handle conversion from real ascent examples', () => {
-    const testAscents = [sampleAscents[0], sampleAscents[1], sampleAscents[24]]
+    const testAscents = [onsight7a, redpoint7b, flash7aBoulder]
 
     for (const ascent of testAscents) {
       if (ascent) {
         const points = fromAscentToPoints(ascent)
         const convertedGrade = fromPointToGrade(points, {
-          climbingDiscipline: ascent.climbingDiscipline,
+          discipline: ascent.discipline,
           style: ascent.style,
         })
         assert.equal(convertedGrade, ascent.topoGrade)

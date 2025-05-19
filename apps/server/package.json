@@ -7,15 +7,10 @@
     "check-types": "tsc --noEmit",
     "compile": "bun build --compile --minify --sourcemap --bytecode ./src/index.ts --outfile server",
     "dev": "bun run --hot src/index.ts",
-    "start": "bun run dist/src/index.js",
-    "db:local": "turso dev --db-file local.db",
-    "db:push": "drizzle-kit push",
-    "db:studio": "drizzle-kit studio",
-    "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate",
-    "seed": "bun run ./src/db/seed.ts"
+    "start": "bun run dist/src/index.js"
   },
   "dependencies": {
+    "@repo/db-schema": "workspace:*",
     "@edouardmisset/array": "npm:@jsr/edouardmisset__array",
     "@edouardmisset/date": "npm:@jsr/edouardmisset__date",
     "@edouardmisset/math": "npm:@jsr/edouardmisset__math",
@@ -25,16 +20,14 @@
     "@orpc/openapi": "^1.2.0",
     "@orpc/server": "^1.2.0",
     "@orpc/zod": "^1.2.0",
-    "@repo/schema": "workspace:*",
     "better-auth": "^1.2.7",
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.38.4",
-    "google-auth-library": "^9.15.1",
-    "google-spreadsheet": "^4.1.4",
     "hono": "^4.7.9",
     "zod": "^3.24.4"
   },
   "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
     "tsc-alias": "^1.8.11",
     "typescript": "^5.8.2",
     "@types/bun": "^1.2.6",

@@ -5,7 +5,7 @@ import {
   GRADE_TO_POINTS,
   type Grade,
   STYLE_TO_POINTS,
-} from '@repo/schema/ascent'
+} from '@repo/db-schema/ascent'
 
 /**
  * Converts a climbing grade to its corresponding background color.

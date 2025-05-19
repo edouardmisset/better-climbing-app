@@ -1,4 +1,4 @@
-import type { Ascent, Grade } from '@repo/schema/ascent'
+import type { Ascent, Grade } from '@repo/db-schema/ascent'
 
 export const ASCENT_STYLE_TO_COLOR = {
   Onsight: 'var(--onsight)',

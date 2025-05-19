@@ -1,4 +1,4 @@
-import type { TrainingSession } from '@repo/schema/training'
+import type { TrainingSession } from '@repo/db-schema/training'
 
 export const TRAINING_SESSION_TYPE_TO_BACKGROUND_COLOR: Record<
   NonNullable<TrainingSession['sessionType']>,

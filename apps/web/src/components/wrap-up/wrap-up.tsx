@@ -1,5 +1,5 @@
-import type { Ascent } from '@repo/schema/ascent'
-import type { TrainingSession } from '@repo/schema/training'
+import type { Ascent } from '@repo/db-schema/ascent'
+import type { TrainingSession } from '@repo/db-schema/training'
 import { Card } from '../card/card'
 import GridLayout from '../grid-layout/grid-layout'
 import { AscentSummary } from './components/ascent-summary'

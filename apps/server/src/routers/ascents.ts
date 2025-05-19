@@ -3,7 +3,7 @@ import {
   getFilteredAscents,
   insertAscent,
   searchAscents,
-} from '@/db/helpers/crud-ascents'
+} from '@repo/db-schema/helpers/ascent'
 import { protectedProcedure, publicProcedure } from '../lib/orpc'
 
 export const list = publicProcedure.ascents.list.handler(async ({ input }) => {

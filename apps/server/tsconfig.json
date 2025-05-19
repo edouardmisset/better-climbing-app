@@ -1,22 +1,10 @@
 {
+  "extends": "@repo/typescript-config",
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
-    "moduleResolution": "bundler",
-    "verbatimModuleSyntax": true,
-    "strict": true,
-    "skipLibCheck": true,
-    "baseUrl": "./",
-    "paths": {
-      "@/*": ["./src/*"]
-    },
     "outDir": "./dist",
-    "types": ["bun"],
+    "rootDir": ".",
     "jsx": "react-jsx",
     "jsxImportSource": "hono/jsx",
-    "composite": true
-  },
-  "tsc-alias": {
-    "resolveFullPaths": true
+    "composite": false
   }
 }
