@@ -20,12 +20,15 @@
     "./constants/ascent": "./src/constants/ascent.ts",
     "./schema/training": "./src/schema/training.ts",
     "./schema/auth": "./src/schema/auth.ts",
-    "./schema/ascent": "./src/schema/ascent.ts"
+    "./schema/ascent": "./src/schema/ascent.ts",
+    "./auth": "./src/lib/auth.ts"
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*"
   },
   "dependencies": {
+    "better-auth": "^1.2.8",
+    "dotenv": "^16.5.0",
     "drizzle-kit": "^0.31.1",
     "drizzle-orm": "^0.43.1",
     "drizzle-zod": "^0.7.1",
