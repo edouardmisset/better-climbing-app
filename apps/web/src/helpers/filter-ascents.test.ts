@@ -22,11 +22,11 @@ describe('filterAscents', () => {
     }
   })
 
-  it('should filter ascents by climbingDiscipline', () => {
-    const result = filterAscents(sampleAscents, { climbingDiscipline: 'Route' })
+  it('should filter ascents by discipline', () => {
+    const result = filterAscents(sampleAscents, { discipline: 'Route' })
     assert.equal(result.length, 84)
-    for (const { climbingDiscipline } of result) {
-      assert.equal(climbingDiscipline, 'Route')
+    for (const { discipline } of result) {
+      assert.equal(discipline, 'Route')
     }
   })
 
@@ -40,12 +40,12 @@ describe('filterAscents', () => {
 
   it('should filter ascents using multiple criteria', () => {
     const result = filterAscents(sampleAscents, {
-      climbingDiscipline: 'Route',
+      discipline: 'Route',
       style: 'Redpoint',
     })
     assert.equal(result.length, 27)
-    for (const { climbingDiscipline, style } of result) {
-      assert.equal(climbingDiscipline, 'Route')
+    for (const { discipline, style } of result) {
+      assert.equal(discipline, 'Route')
       assert.equal(style, 'Redpoint')
     }
   })

@@ -1,6 +1,10 @@
 {
   "name": "@repo/google-sheets",
   "type": "module",
+  "exports": {
+    "./ascent": "./src/ascent.ts",
+    "./training": "./src/training.ts"
+  },
   "dependencies": {
     "@repo/db-schema": "workspace:*",
     "google-auth-library": "^9.15.1",

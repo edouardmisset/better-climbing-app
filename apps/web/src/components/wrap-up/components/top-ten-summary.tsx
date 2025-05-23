@@ -5,7 +5,7 @@ import {
 import { displayGrade } from '@/helpers/display-grade'
 import { frenchNumberFormatter } from '@/helpers/number-formatter'
 import { sum } from '@edouardmisset/math'
-import type { Ascent } from '@repo/db-schema/ascent'
+import type { Ascent } from '@repo/db-schema/schema/ascent'
 import { useMemo } from 'react'
 import { Card } from '../../card/card'
 import { SCORE_INCREMENT } from '../constants'
@@ -44,7 +44,7 @@ export function TopTenSummary({ ascents }: { ascents: Ascent[] }) {
             Onsighting a{' '}
             <strong>
               {fromPointToGrade(nextStepPoints, {
-                climbingDiscipline: 'Route',
+                discipline: 'Route',
                 style: 'Onsight',
               })}
             </strong>{' '}
@@ -54,7 +54,7 @@ export function TopTenSummary({ ascents }: { ascents: Ascent[] }) {
             Flashing a{' '}
             <strong>
               {fromPointToGrade(nextStepPoints, {
-                climbingDiscipline: 'Route',
+                discipline: 'Route',
                 style: 'Flash',
               })}
             </strong>{' '}
@@ -64,7 +64,7 @@ export function TopTenSummary({ ascents }: { ascents: Ascent[] }) {
             Redpointing a{' '}
             <strong>
               {fromPointToGrade(nextStepPoints, {
-                climbingDiscipline: 'Route',
+                discipline: 'Route',
                 style: 'Redpoint',
               })}
             </strong>{' '}
@@ -75,10 +75,10 @@ export function TopTenSummary({ ascents }: { ascents: Ascent[] }) {
             <strong>
               {displayGrade({
                 grade: fromPointToGrade(nextStepPoints, {
-                  climbingDiscipline: 'Boulder',
+                  discipline: 'Boulder',
                   style: 'Flash',
                 }),
-                climbingDiscipline: 'Boulder',
+                discipline: 'Boulder',
               })}
             </strong>{' '}
             boulder
@@ -88,10 +88,10 @@ export function TopTenSummary({ ascents }: { ascents: Ascent[] }) {
             <strong>
               {displayGrade({
                 grade: fromPointToGrade(nextStepPoints, {
-                  climbingDiscipline: 'Boulder',
+                  discipline: 'Boulder',
                   style: 'Redpoint',
                 }),
-                climbingDiscipline: 'Boulder',
+                discipline: 'Boulder',
               })}
             </strong>{' '}
             boulder

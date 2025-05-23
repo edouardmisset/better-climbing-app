@@ -1,13 +1,13 @@
 import {
   type TrainingSession,
-  trainingSessionSchema,
-} from '@repo/db-schema/training'
+  trainingSessionSelectSchema,
+} from '@repo/db-schema/schema/training'
 import type { GoogleSpreadsheetWorksheet } from 'google-spreadsheet'
+import { loadWorksheet } from './google-sheets'
 import {
   transformTrainingSessionFromGSToJS,
   transformTrainingSessionFromJSToGS,
-} from '../../../apps/server/src/helpers/transformers/transformers'
-import { loadWorksheet } from './google-sheets'
+} from './helpers/transformers'
 
 /**
  * Retrieves all training sessions from the Google Sheets 'training' worksheet,
@@ -36,7 +36,7 @@ export async function getTrainingSessionsFromDB(): Promise<TrainingSession[]> {
     }),
   )
 
-  const parsedTrainingSession = trainingSessionSchema
+  const parsedTrainingSession = trainingSessionSelectSchema
     .array()
     .safeParse(rawTrainingSessions)
 

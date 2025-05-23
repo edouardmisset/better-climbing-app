@@ -1,5 +1,5 @@
-import type { Ascent } from '@repo/db-schema/ascent'
-import type { TrainingSession } from '@repo/db-schema/training'
+import type { Ascent } from '@repo/db-schema/schema/ascent'
+import type { TrainingSession } from '@repo/db-schema/schema/training'
 import { type DATE_TIME_OPTIONS, formatDateTime } from './format-date'
 import { formatOrdinals } from './format-plurals'
 
@@ -28,7 +28,7 @@ export function formatCragAndArea(
 }
 
 export function formatRating(rating: Ascent['rating']) {
-  return rating === undefined
+  return rating == null
     ? ''
     : Array.from({ length: rating }, () => '⭐').join('')
 }
@@ -81,13 +81,13 @@ const ASCENT_STYLE_TO_EMOJI: Record<Ascent['style'], Emoji> = {
 }
 
 export function fromAscentStyleToEmoji(style: Ascent['style']): Emoji {
-  return style === undefined
+  return style == null
     ? ASCENT_STYLE_TO_EMOJI.Redpoint
     : (ASCENT_STYLE_TO_EMOJI[style] ?? ASCENT_STYLE_TO_EMOJI.Redpoint)
 }
 
 const ENERGY_SYSTEM_TO_EMOJI: Record<
-  Exclude<TrainingSession['energySystem'], undefined>,
+  NonNullable<TrainingSession['energySystem']>,
   Emoji
 > = {
   AA: '🔥',
@@ -98,13 +98,13 @@ const ENERGY_SYSTEM_TO_EMOJI: Record<
 export function fromEnergySystemToEmoji(
   energySystem: TrainingSession['energySystem'],
 ): Emoji | '' {
-  return energySystem === undefined
+  return energySystem == null
     ? ''
     : (ENERGY_SYSTEM_TO_EMOJI[energySystem] ?? '')
 }
 
 const ANATOMICAL_REGION_TO_EMOJI: Record<
-  Exclude<TrainingSession['anatomicalRegion'], undefined>,
+  NonNullable<TrainingSession['anatomicalRegion']>,
   Emoji
 > = {
   Ar: '💪',
@@ -115,13 +115,13 @@ const ANATOMICAL_REGION_TO_EMOJI: Record<
 export function fromAnatomicalRegionToEmoji(
   anatomicalRegion: TrainingSession['anatomicalRegion'],
 ): Emoji | '' {
-  return anatomicalRegion === undefined
+  return anatomicalRegion == null
     ? ''
     : (ANATOMICAL_REGION_TO_EMOJI[anatomicalRegion] ?? '')
 }
 
 const CLIMBING_DISCIPLINE_TO_EMOJI: Record<
-  NonNullable<TrainingSession['climbingDiscipline']>,
+  NonNullable<TrainingSession['discipline']>,
   Emoji
 > = {
   Boulder: '🪨',
@@ -130,9 +130,9 @@ const CLIMBING_DISCIPLINE_TO_EMOJI: Record<
 }
 
 export function fromClimbingDisciplineToEmoji(
-  climbingDiscipline: TrainingSession['climbingDiscipline'],
+  discipline: TrainingSession['discipline'],
 ): Emoji | '' {
-  return climbingDiscipline === undefined
+  return discipline == null
     ? ''
-    : (CLIMBING_DISCIPLINE_TO_EMOJI[climbingDiscipline] ?? '')
+    : (CLIMBING_DISCIPLINE_TO_EMOJI[discipline] ?? '')
 }

@@ -1,7 +1,7 @@
+import { DEFAULT_GRADE } from '@/constants/ascents'
 import { objectKeys } from '@edouardmisset/object'
+import { GRADE_TO_NUMBER, type Grade } from '@repo/db-schema/constants/ascent'
 import { assert, describe, it } from 'poku'
-import { DEFAULT_GRADE } from '~/constants/ascents'
-import { GRADE_TO_NUMBER, type Grade } from '~/schema/ascent'
 import {
   NUMBER_TO_GRADE,
   fromGradeToNumber,

@@ -1,4 +1,5 @@
-import type { Ascent, Grade } from '@repo/db-schema/ascent'
+import type { Grade } from '@repo/db-schema/constants/ascent'
+import type { Ascent } from '@repo/db-schema/schema/ascent'
 
 export const ASCENT_STYLE_TO_COLOR = {
   Onsight: 'var(--onsight)',
@@ -10,7 +11,7 @@ export const CLIMBING_DISCIPLINE_TO_COLOR = {
   'Multi-Pitch': 'var(--multi-pitch)',
   Boulder: 'var(--boulder)',
   Route: 'var(--route)',
-} as const satisfies Record<Ascent['climbingDiscipline'], string>
+} as const satisfies Record<Ascent['discipline'], string>
 
 /**
  * This is a mapping from ascent grades to colors.

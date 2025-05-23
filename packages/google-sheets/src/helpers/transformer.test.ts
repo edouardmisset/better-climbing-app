@@ -1,11 +1,12 @@
-import { type Ascent, HOLDS, HOLDS_FROM_GS } from '@repo/db-schema/ascent'
+import { HOLDS } from '@repo/db-schema/constants/ascent'
+import type { Ascent } from '@repo/db-schema/schema/ascent'
+import { assert, describe, it } from 'poku'
+import { HOLDS_FROM_GS } from '../constants/ascent'
+import type { GSAscentRecord } from './headers.ts'
 import {
   transformAscentFromGSToJS,
   transformAscentFromJSToGS,
 } from './transformers'
-
-import { assert, describe, it } from 'poku'
-import type { GSAscentRecord } from './headers.ts'
 
 const customDeepEquals = <
   T extends Record<string, unknown>,
@@ -27,9 +28,8 @@ describe('transformAscentFromJSToGS', () => {
     const boulderingAscent: Omit<Ascent, 'id'> = {
       style: 'Flash',
       tries: 1,
-      climber: 'Edouard Misset',
       crag: 'Fontainebleau',
-      climbingDiscipline: 'Boulder',
+      discipline: 'Boulder',
       topoGrade: '6a',
       area: 'Le Cul de Chien',
       routeName: 'La Marie Rose',
@@ -40,6 +40,8 @@ describe('transformAscentFromJSToGS', () => {
       holds: 'Sloper',
       personalGrade: '6a',
       region: 'Île-de-France',
+      height: 0,
+      points: 0,
     }
 
     const expectedGSRecord = {
@@ -70,9 +72,8 @@ describe('transformAscentFromJSToGS', () => {
     const routeAscent: Omit<Ascent, 'id'> = {
       style: 'Redpoint',
       tries: 3,
-      climber: 'Edouard Misset',
       crag: 'Balme de Yenne',
-      climbingDiscipline: 'Route',
+      discipline: 'Route',
       topoGrade: '8a',
       area: 'Secteur 13',
       routeName: 'Bonobo',
@@ -82,6 +83,9 @@ describe('transformAscentFromJSToGS', () => {
       personalGrade: '7a',
       region: 'ARA',
       height: 20,
+      comments: '  ',
+      points: 0,
+      rating: 0,
     }
 
     const expectedGSRecord = {
@@ -113,20 +117,20 @@ describe('transformAscentFromJSToGS', () => {
     const undefinedAscent: Omit<Ascent, 'id'> = {
       style: 'Onsight',
       tries: 1,
-      climber: 'Edouard Misset',
       crag: 'Ceuse',
-      climbingDiscipline: 'Route',
+      discipline: 'Route',
       topoGrade: '7b+',
       area: 'Berlin',
       routeName: 'Biographie',
       date: new Date(2023, 6, 15, 8, 0).toString(), // 2023-07-15T08:00:00.000Z
-      profile: undefined,
-      holds: undefined,
-      personalGrade: undefined,
-      region: undefined,
-      height: undefined,
-      rating: undefined,
-      comments: undefined,
+      profile: null,
+      holds: null,
+      personalGrade: null,
+      region: null,
+      height: null,
+      rating: null,
+      comments: null,
+      points: 0,
     }
 
     const expectedGSRecord = {
@@ -178,9 +182,8 @@ describe('transformAscentFromGSToJS', () => {
     const expectedAscent: Omit<Ascent, 'id'> = {
       style: 'Flash',
       tries: 1,
-      climber: 'Edouard Misset',
       crag: 'Fontainebleau',
-      climbingDiscipline: 'Boulder',
+      discipline: 'Boulder',
       topoGrade: '6a',
       area: 'Le Cul de Chien',
       routeName: 'La Marie Rose',
@@ -191,6 +194,8 @@ describe('transformAscentFromGSToJS', () => {
       holds: 'Sloper',
       personalGrade: '6a',
       region: 'Île-de-France',
+      height: 0,
+      points: 0,
     }
 
     customDeepEquals(
@@ -224,7 +229,7 @@ describe('transformAscentFromGSToJS', () => {
       tries: 3,
       climber: 'Edouard Misset',
       crag: 'Balme de Yenne',
-      climbingDiscipline: 'Route',
+      discipline: 'Route',
       topoGrade: '8a',
       area: 'Secteur 13',
       routeName: 'Bonobo',
@@ -265,7 +270,7 @@ describe('transformAscentFromGSToJS', () => {
       tries: 1,
       climber: 'Edouard Misset',
       crag: 'Ceuse',
-      climbingDiscipline: 'Route',
+      discipline: 'Route',
       topoGrade: '7b+',
       area: 'Berlin',
       routeName: 'Biographie',
@@ -287,7 +292,7 @@ describe('transformAscentFromJSToGS and transformAscentFromGSToJS', () => {
         tries: 3,
         climber: 'Edouard Misset',
         crag: 'Balme de Yenne',
-        climbingDiscipline: 'Route',
+        discipline: 'Route',
         topoGrade: '8a',
         area: 'Secteur 13',
         routeName: 'Bonobo',
@@ -303,7 +308,7 @@ describe('transformAscentFromJSToGS and transformAscentFromGSToJS', () => {
         tries: 1,
         climber: 'Edouard Misset',
         crag: 'Ceuse',
-        climbingDiscipline: 'Route',
+        discipline: 'Route',
         topoGrade: '7b+',
         area: 'Berlin',
         routeName: 'Biographie',
@@ -314,7 +319,7 @@ describe('transformAscentFromJSToGS and transformAscentFromGSToJS', () => {
         tries: 1,
         climber: 'Edouard Misset',
         crag: 'Fontainebleau',
-        climbingDiscipline: 'Boulder',
+        discipline: 'Boulder',
         topoGrade: '6a',
         area: 'Le Cul de Chien',
         routeName: 'La Marie Rose',

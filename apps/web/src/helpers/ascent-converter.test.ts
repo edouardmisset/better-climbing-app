@@ -2,16 +2,17 @@ import {
   BOULDERING_BONUS_POINTS,
   GRADE_TO_POINTS,
   STYLE_TO_POINTS,
-} from '@repo/db-schema/ascent'
+} from '@repo/db-schema/constants/ascent'
 import { assert, describe, it } from 'poku'
 import { sampleAscents } from '~/backup/sample-ascents'
-import { DEFAULT_GRADE } from '~/constants/ascents'
 import {
   fromAscentToPoints,
   fromGradeToBackgroundColor,
   fromGradeToClassName,
   fromPointToGrade,
 } from './ascent-converter'
+
+const DEFAULT_GRADE = '1a'
 
 describe('fromGradeToBackgroundColor', () => {
   it('should return black when grade is undefined', () => {
@@ -85,7 +86,7 @@ describe('fromPointToGrade', () => {
     const pointsWith7aBoulderBonus = pointsFor7a + BOULDERING_BONUS_POINTS
     assert.equal(
       fromPointToGrade(pointsWith7aBoulderBonus, {
-        climbingDiscipline: 'Boulder',
+        discipline: 'Boulder',
       }),
       '7a',
     )
@@ -113,7 +114,7 @@ describe('fromPointToGrade', () => {
     const combinedPoints = pointsFor7a + flashPoints + BOULDERING_BONUS_POINTS
     assert.equal(
       fromPointToGrade(combinedPoints, {
-        climbingDiscipline: 'Boulder',
+        discipline: 'Boulder',
         style: 'Flash',
       }),
       '7a',
@@ -137,7 +138,7 @@ describe('fromPointToGrade', () => {
       if (ascent) {
         const points = fromAscentToPoints(ascent)
         const convertedGrade = fromPointToGrade(points, {
-          climbingDiscipline: ascent.climbingDiscipline,
+          discipline: ascent.discipline,
           style: ascent.style,
         })
         assert.equal(convertedGrade, ascent.topoGrade)

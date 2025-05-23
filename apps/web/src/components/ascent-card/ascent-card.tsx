@@ -11,14 +11,14 @@ import {
   prettyLongDate,
 } from '@/helpers/formatters'
 import { wrapInParentheses } from '@edouardmisset/text'
-import type { Ascent } from '@repo/db-schema/ascent'
+import type { Ascent } from '@repo/db-schema/schema/ascent'
 import { type CSSProperties, useMemo } from 'react'
 import styles from './ascent-card.module.css'
 
 export function AscentCard({ ascent }: { ascent: Ascent }) {
   const {
     area,
-    climbingDiscipline,
+    discipline,
     comments,
     crag,
     date,
@@ -40,13 +40,16 @@ export function AscentCard({ ascent }: { ascent: Ascent }) {
     [comments],
   )
 
-  const formattedGrade = displayGrade({ grade: topoGrade, climbingDiscipline })
+  const formattedGrade = displayGrade({
+    grade: topoGrade,
+    discipline,
+  })
   return (
     <div className={styles.card}>
       <h2
         className={`${styles.header} text-no-wrap`}
         title={`${routeName} ${formattedGrade}`}
-      >{`${fromClimbingDisciplineToEmoji(climbingDiscipline)} ${routeName} ${wrapInParentheses(formattedGrade)}`}</h2>
+      >{`${fromClimbingDisciplineToEmoji(discipline)} ${routeName} ${wrapInParentheses(formattedGrade)}`}</h2>
       <div className={styles.content}>
         <div className={styles.placeAndTime}>
           <time>{prettyLongDate(date)}</time>

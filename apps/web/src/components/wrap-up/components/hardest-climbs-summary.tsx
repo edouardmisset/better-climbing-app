@@ -1,5 +1,5 @@
 import { filterAscents, getHardestAscent } from '@/helpers/filter-ascents'
-import type { Ascent } from '@repo/db-schema/ascent'
+import type { Ascent } from '@repo/db-schema/schema/ascent'
 import { AscentComponent } from '../../ascent-component/ascent-component'
 import { AscentsWithPopover } from '../../ascents-with-popover/ascents-with-popover'
 import { Card } from '../../card/card'
@@ -19,8 +19,8 @@ export function HardestClimbsSummary({
     topoGrade.startsWith(highestDegree.toString()),
   )
 
-  const boulders = filterAscents(ascents, { climbingDiscipline: 'Boulder' })
-  const routes = filterAscents(ascents, { climbingDiscipline: 'Route' })
+  const boulders = filterAscents(ascents, { discipline: 'Boulder' })
+  const routes = filterAscents(ascents, { discipline: 'Route' })
 
   const hardestRoute = routes.length > 0 ? getHardestAscent(routes) : undefined
   const hardestBoulder =

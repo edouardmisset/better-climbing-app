@@ -1,12 +1,11 @@
-import type { Ascent } from '@repo/db-schema/ascent'
+import { NOT_AVAILABLE } from '@/constants/generic'
+import type { Ascent } from '@repo/db-schema/schema/ascent'
 import { assert, describe, it } from 'poku'
-import { NOT_AVAILABLE } from '~/constants/generic'
 import { getAverageGrade } from './get-average-grade'
 
 const ascent1: Ascent = {
   area: 'Wig Wam',
-  climber: 'Edouard Misset',
-  climbingDiscipline: 'Route',
+  discipline: 'Route',
   comments: 'À la fois superbe grimpe et passage terrifiant. ',
   crag: 'Ewige Jagdgründe',
   date: '2024-10-27T12:00:00.000Z',
@@ -20,11 +19,12 @@ const ascent1: Ascent = {
   topoGrade: '7a',
   tries: 1,
   id: 1,
+  points: 0,
+  region: 'Hautes-Alpes',
 }
 const ascent2: Ascent = {
   area: 'Envers du canyon',
-  climber: 'Edouard Misset',
-  climbingDiscipline: 'Route',
+  discipline: 'Route',
   comments: 'Dur :(',
   crag: 'Rue des masques',
   date: '2023-08-01T12:00:00.000Z',
@@ -39,11 +39,11 @@ const ascent2: Ascent = {
   topoGrade: '7b',
   tries: 2,
   id: 2,
+  points: 0,
 }
 const ascent3: Ascent = {
   area: 'Tarzoon',
-  climber: 'Edouard Misset',
-  climbingDiscipline: 'Route',
+  discipline: 'Route',
   crag: 'Claret',
   date: '2024-01-01T12:00:00.000Z',
   height: 25,
@@ -57,6 +57,8 @@ const ascent3: Ascent = {
   topoGrade: '7b',
   tries: 1,
   id: 3,
+  comments: 'Superbe !',
+  points: 0,
 }
 
 describe('getAverageGrade', () => {

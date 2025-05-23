@@ -1,4 +1,4 @@
-import { sortNumericalValues } from './sort-values.ts'
+import { sortNumericalValues } from './sort-values'
 
 export function frequencyBy<
   Object_ extends Record<string, string | number>,

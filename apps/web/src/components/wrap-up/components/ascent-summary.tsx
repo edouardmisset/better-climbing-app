@@ -2,7 +2,7 @@ import { displayGrade } from '@/helpers/display-grade'
 import { filterAscents } from '@/helpers/filter-ascents'
 import { getAverageGrade } from '@/helpers/get-average-grade'
 import { sortByDate } from '@/helpers/sort-by-date'
-import type { Ascent } from '@repo/db-schema/ascent'
+import type { Ascent } from '@repo/db-schema/schema/ascent'
 import { AscentComponent } from '../../ascent-component/ascent-component'
 import { AscentsWithPopover } from '../../ascents-with-popover/ascents-with-popover'
 import { Card } from '../../card/card'
@@ -24,8 +24,8 @@ export function AscentSummary({
     style: 'Redpoint',
   })
 
-  const boulders = filterAscents(ascents, { climbingDiscipline: 'Boulder' })
-  const routes = filterAscents(ascents, { climbingDiscipline: 'Route' })
+  const boulders = filterAscents(ascents, { discipline: 'Boulder' })
+  const routes = filterAscents(ascents, { discipline: 'Route' })
 
   const averageRouteGrade = getAverageGrade(routes)
   const averageBoulderGrade = getAverageGrade(boulders)
@@ -34,7 +34,7 @@ export function AscentSummary({
     <Card>
       <h2>Ascents</h2>
       <p>
-        Your last {mostRecentAscent.climbingDiscipline.toLowerCase()} was{' '}
+        Your last {mostRecentAscent.discipline.toLowerCase()} was{' '}
         <AscentComponent ascent={mostRecentAscent} showGrade={true} />
       </p>
 
@@ -65,7 +65,7 @@ export function AscentSummary({
           <strong>
             {displayGrade({
               grade: averageBoulderGrade,
-              climbingDiscipline: 'Boulder',
+              discipline: 'Boulder',
             })}
           </strong>
         </p>

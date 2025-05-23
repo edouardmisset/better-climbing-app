@@ -1,5 +1,5 @@
 import { getCragsDetails } from '@/helpers/filter-ascents'
-import type { Ascent } from '@repo/db-schema/ascent'
+import type { Ascent } from '@repo/db-schema/schema/ascent'
 import ascentsWithPopoverStyles from '../../ascents-with-popover/ascents-with-popover.module.css'
 import { Card } from '../../card/card'
 import { Popover } from '../../popover/popover'

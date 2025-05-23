@@ -1,14 +1,15 @@
-import type { Ascent, Grade } from '@repo/db-schema/ascent'
+import type { Grade } from '@repo/db-schema/constants/ascent'
+import type { Ascent } from '@repo/db-schema/schema/ascent'
 
 /**
  * @param params - The parameters for displaying the grade.
  * @param params.grade - The grade to display.
- * @param params.climbingDiscipline - The climbing discipline.
+ * @param params.discipline - The climbing discipline.
  * @returns The formatted grade string.
  */
 interface DisplayGradeParams {
   grade: Grade
-  climbingDiscipline: Ascent['climbingDiscipline']
+  discipline: Ascent['discipline']
 }
 
 /**
@@ -20,6 +21,6 @@ interface DisplayGradeParams {
  * @returns The formatted grade string.
  */
 export function displayGrade(params: DisplayGradeParams): string {
-  const { climbingDiscipline, grade } = params
-  return climbingDiscipline === 'Boulder' ? grade.toUpperCase() : grade
+  const { discipline, grade } = params
+  return discipline === 'Boulder' ? grade.toUpperCase() : grade
 }

@@ -6,7 +6,7 @@ import {
   createSelectSchema,
   createUpdateSchema,
 } from 'drizzle-zod'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import { DISCIPLINE } from '../constants/ascent'
 import {
   ANATOMICAL_REGIONS,
@@ -85,18 +85,18 @@ export const trainingSessionSelectSchema = createSelectSchema(
   trainingSessionRefinements,
 )
 
-export type TrainingSession = z.infer<typeof trainingSessionSelectSchema>
+export type TrainingSession = typeof trainingSessionSelectSchema._type
 
 export const trainingSessionInsertSchema = createInsertSchema(
   trainingSession,
   trainingSessionRefinements,
 )
 
-export type TrainingSessionInsert = z.infer<typeof trainingSessionInsertSchema>
+export type TrainingSessionInsert = typeof trainingSessionInsertSchema._type
 
 export const trainingSessionUpdateSchema = createUpdateSchema(
   trainingSession,
   trainingSessionRefinements,
 )
 
-export type TrainingSessionUpdate = z.infer<typeof trainingSessionUpdateSchema>
+export type TrainingSessionUpdate = typeof trainingSessionUpdateSchema._type

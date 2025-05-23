@@ -6,7 +6,6 @@ import {
   createSelectSchema,
   createUpdateSchema,
 } from 'drizzle-zod'
-import type { z } from 'zod'
 import {
   ASCENT_STYLE,
   DISCIPLINE,
@@ -59,18 +58,18 @@ export const ascentSelectSchema = createSelectSchema(
   ascentSchemaRefinements,
 )
 
-export type Ascent = z.infer<typeof ascentSelectSchema>
+export type Ascent = typeof ascentSelectSchema._type
 
 export const ascentInsertSchema = createInsertSchema(
   ascent,
   ascentSchemaRefinements,
 )
 
-export type AscentInsert = z.infer<typeof ascentInsertSchema>
+export type AscentInsert = typeof ascentInsertSchema._type
 
 export const ascentUpdateSchema = createUpdateSchema(
   ascent,
   ascentSchemaRefinements,
 )
 
-export type AscentUpdate = z.infer<typeof ascentUpdateSchema>
+export type AscentUpdate = typeof ascentUpdateSchema._type

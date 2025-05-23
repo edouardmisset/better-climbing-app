@@ -43,7 +43,7 @@ export function fromAscentToPoints({
  *
  * @param {number} points - The points value to convert to a grade.
  * @param {Object} [to] - Optional parameters to adjust the conversion.
- * @param {string} [to.climbingDiscipline='Route'] - The climbing discipline ('Route' or 'Boulder').
+ * @param {string} [to.discipline='Route'] - The climbing discipline ('Route' or 'Boulder').
  * @param {string} [to.style='Redpoint'] - The climbing style.
  * @returns {Grade} The climbing grade corresponding to the points value, or
  * DEFAULT_GRADE if no match is found.

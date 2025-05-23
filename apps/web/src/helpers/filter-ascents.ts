@@ -2,8 +2,8 @@ import { DEFAULT_GRADE } from '@/constants/ascents'
 import { isDateInYear } from '@edouardmisset/date'
 import { objectKeys, objectSize } from '@edouardmisset/object'
 import { stringEqualsCaseInsensitive } from '@edouardmisset/text'
-import type { Ascent } from '@repo/db-schema/ascent'
-import type { OptionalAscentFilter } from '../../../server/src/contracts/ascents'
+import type { OptionalAscentFilter } from '@repo/db-schema/helpers/ascent'
+import type { Ascent } from '@repo/db-schema/schema/ascent'
 import { frequencyBy } from './frequency-by'
 import { fromGradeToNumber } from './grade-converter'
 
@@ -43,7 +43,7 @@ export function filterAscents(
     ascent =>
       (topoGrade === undefined ||
         stringEqualsCaseInsensitive(ascent.topoGrade, topoGrade)) &&
-      (discipline === undefined || ascent.climbingDiscipline === discipline) &&
+      (discipline === undefined || ascent.discipline === discipline) &&
       (year === undefined || isDateInYear(ascent.date, year)) &&
       (style === undefined || ascent.style === style) &&
       (profile === undefined || ascent.profile === profile) &&

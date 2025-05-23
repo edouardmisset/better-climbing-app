@@ -1,6 +1,6 @@
 import { type SQL, and, eq } from 'drizzle-orm'
 import { z } from 'zod'
-import { db } from '../index'
+import { db } from '../../index'
 import {
   type TrainingSession,
   type TrainingSessionInsert,

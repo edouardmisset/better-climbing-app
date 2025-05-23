@@ -1,7 +1,6 @@
-import { fromAscentToPoints } from '@/helpers/ascent-converter'
-import { getAscentsFromGS } from '@/services/ascents'
-import { getTrainingSessionsFromDB as getTrainingSessionsFromGS } from '@/services/training'
-import { db } from '.'
+import { getAscentsFromGS } from '@repo/google-sheets/ascent'
+import { getTrainingSessionsFromDB as getTrainingSessionsFromGS } from '@repo/google-sheets/training'
+import { db } from '../index'
 import { ascent } from './schema/ascent'
 import { trainingSession } from './schema/training'
 
@@ -12,17 +11,17 @@ const trainingSessionsFromGS = await getTrainingSessionsFromGS()
 
 // Transform the data to fit the database schemas
 const ascentsToDB = ascentsFromGS.map(ascent => {
-  const { climbingDiscipline, points, id, ...rest } = ascent
+  const { discipline, points, id, ...rest } = ascent
   return {
     ...rest,
-    discipline: climbingDiscipline,
+    discipline,
     points: points ?? fromAscentToPoints(ascent),
   }
 })
 
 const trainingSessionsToDB = trainingSessionsFromGS.map(
-  ({ id, climbingDiscipline, sessionType, gymCrag, ...rest }) => ({
-    discipline: climbingDiscipline,
+  ({ id, discipline, sessionType, gymCrag, ...rest }) => ({
+    discipline,
     location: gymCrag,
     type: sessionType,
     ...rest,

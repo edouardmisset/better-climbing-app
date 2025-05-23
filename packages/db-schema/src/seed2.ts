@@ -1,8 +1,7 @@
-import { fromAscentToPoints } from '@/helpers/ascent-converter'
-import { getAscentsFromGS } from '@/services/ascents'
-import { getTrainingSessionsFromDB as getTrainingSessionsFromGS } from '@/services/training'
+import { getAscentsFromGS } from '@repo/google-sheets/ascent'
+import { getTrainingSessionsFromDB as getTrainingSessionsFromGS } from '@repo/google-sheets/training'
 import { sql } from 'drizzle-orm'
-import { db } from '.'
+import { db } from '..'
 import { ascent } from './schema/ascent'
 import { trainingSession } from './schema/training'
 
@@ -113,10 +112,10 @@ function transformAscentsData(
   logger.info(`Transforming ${ascentsData.length} ascents...`)
 
   return ascentsData.map(ascent => {
-    const { climbingDiscipline, points, id, ...rest } = ascent
+    const { discipline, points, id, ...rest } = ascent
     return {
       ...rest,
-      discipline: climbingDiscipline,
+      discipline,
       points: points ?? fromAscentToPoints(ascent),
     }
   })
@@ -132,8 +131,8 @@ function transformTrainingSessionsData(
   logger.info(`Transforming ${trainingData.length} training sessions...`)
 
   return trainingData.map(
-    ({ id, climbingDiscipline, sessionType, gymCrag, ...rest }) => ({
-      discipline: climbingDiscipline,
+    ({ id, discipline, sessionType, gymCrag, ...rest }) => ({
+      discipline,
       location: gymCrag,
       type: sessionType,
       ...rest,

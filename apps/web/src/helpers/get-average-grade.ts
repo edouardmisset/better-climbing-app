@@ -1,6 +1,7 @@
 import { NOT_AVAILABLE } from '@/constants/generic'
 import { average } from '@edouardmisset/math'
-import type { Ascent, Grade } from '@repo/db-schema/ascent'
+import type { Grade } from '@repo/db-schema/constants/ascent'
+import type { Ascent } from '@repo/db-schema/schema/ascent'
 import { fromGradeToNumber, fromNumberToGrade } from './grade-converter'
 
 export function getAverageGrade(

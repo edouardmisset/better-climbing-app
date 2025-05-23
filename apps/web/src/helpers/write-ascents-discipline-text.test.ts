@@ -1,9 +1,9 @@
-import type { Ascent } from '@repo/db-schema/ascent'
+import type { Ascent } from '@repo/db-schema/schema/ascent'
 import { assert, describe, it } from 'poku'
 import { writeAscentsDisciplineText } from './write-ascents-discipline-text'
 
-const route = { climbingDiscipline: 'Route' } as const
-const boulder = { climbingDiscipline: 'Boulder' } as const
+const route = { discipline: 'Route' } as const
+const boulder = { discipline: 'Boulder' } as const
 
 describe('writeAscentsDisciplineText', () => {
   it('should return "ascents" when no ascents are provided', () => {

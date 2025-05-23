@@ -1,7 +1,7 @@
 import { validNumberWithFallback } from '@edouardmisset/math'
 import { type SQL, and, eq, like } from 'drizzle-orm'
 import { z } from 'zod'
-import { db } from '../index'
+import { db } from '../../index'
 import {
   type Ascent,
   type AscentInsert,

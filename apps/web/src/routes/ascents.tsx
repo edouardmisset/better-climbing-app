@@ -1,6 +1,6 @@
-import type { Ascent } from '@repo/db-schema/ascent'
+import type { Ascent } from '@repo/db-schema/schema/ascent'
 
-export function Ascents({ ascents }: { ascents: Ascent[] }): React.JSX.Element {
+export function Ascents({ ascents }: { ascents: Ascent[] }) {
   return (
     <div>
       {ascents.map(ascent => (

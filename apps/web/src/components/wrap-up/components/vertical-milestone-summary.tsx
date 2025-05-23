@@ -3,13 +3,13 @@ import { filterAscents } from '@/helpers/filter-ascents'
 import { frenchNumberFormatter } from '@/helpers/number-formatter'
 import { average } from '@edouardmisset/math'
 import { sum } from '@edouardmisset/math/sum.ts'
-import type { Ascent } from '@repo/db-schema/ascent'
+import type { Ascent } from '@repo/db-schema/schema/ascent'
 import { AscentsWithPopover } from '../../ascents-with-popover/ascents-with-popover'
 import { Card } from '../../card/card'
 
 export function VerticalMilestoneSummary({ ascents }: { ascents: Ascent[] }) {
-  const boulders = filterAscents(ascents, { climbingDiscipline: 'Boulder' })
-  const routes = filterAscents(ascents, { climbingDiscipline: 'Route' })
+  const boulders = filterAscents(ascents, { discipline: 'Boulder' })
+  const routes = filterAscents(ascents, { discipline: 'Route' })
 
   if (boulders.length === 0 && routes.length === 0) return undefined
 

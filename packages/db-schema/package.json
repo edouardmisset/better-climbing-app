@@ -2,8 +2,8 @@
   "name": "@repo/db-schema",
   "type": "module",
   "scripts": {
-    "dev": "bun run --hot src/index.ts",
-    "start": "bun run dist/src/index.js",
+    "dev": "bun run --hot index.ts",
+    "start": "bun run dist/index.js",
     "db:local": "turso dev --db-file local.db",
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
@@ -13,7 +13,7 @@
     "build": "tsc"
   },
   "exports": {
-    "./db": "./src/index.ts",
+    "./db": "./index.ts",
     "./helpers/ascent": "./src/helpers/crud-ascent.ts",
     "./helpers/training": "./src/helpers/crud-training.ts",
     "./constants/training": "./src/constants/training.ts",
@@ -27,6 +27,7 @@
     "@repo/typescript-config": "workspace:*"
   },
   "dependencies": {
+    "@libsql/client": "^0.15.7",
     "better-auth": "^1.2.8",
     "dotenv": "^16.5.0",
     "drizzle-kit": "^0.31.1",
