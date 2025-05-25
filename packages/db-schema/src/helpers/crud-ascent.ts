@@ -3,6 +3,7 @@ import { db } from '../../index'
 import {
   type Ascent,
   type AscentInsert,
+  type AscentQueryParams,
   type OptionalAscentFilter,
   ascentTable,
 } from '../schema/ascent'

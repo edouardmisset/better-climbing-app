@@ -1,33 +1,11 @@
 import { type SQL, and, eq } from 'drizzle-orm'
-import { z } from 'zod/v4'
 import { db } from '../../index'
 import {
+  type OptionalTrainingFilter,
   type TrainingSession,
   type TrainingSessionInsert,
   trainingSessionTable,
 } from '../schema/training'
-
-export const optionalTrainingFilterSchema = z
-  .object({
-    type: trainingSessionSelectSchema.shape.type.optional(),
-    discipline: trainingSessionSelectSchema.shape.discipline.optional(),
-
-    year: z.number().int().optional(),
-    location: trainingSessionSelectSchema.shape.location.optional(),
-
-    anatomicalRegion:
-      trainingSessionSelectSchema.shape.anatomicalRegion.optional(),
-    energySystem: trainingSessionSelectSchema.shape.energySystem.optional(),
-
-    load: trainingSessionSelectSchema.shape.load.optional(),
-    intensity: trainingSessionSelectSchema.shape.intensity.optional(),
-    volume: trainingSessionSelectSchema.shape.volume.optional(),
-  })
-  .optional()
-
-export type OptionalTrainingFilter = z.infer<
-  typeof optionalTrainingFilterSchema
->
 
 export async function getTrainingSessions(options: OptionalTrainingFilter) {
   const {

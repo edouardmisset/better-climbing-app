@@ -101,3 +101,27 @@ export const trainingSessionUpdateSchema = createUpdateSchema(
 )
 
 export type TrainingSessionUpdate = z.infer<typeof trainingSessionUpdateSchema>
+
+export const optionalTrainingFilterSchema = trainingSessionSelectSchema
+  .pick({
+    type: true,
+    discipline: true,
+
+    location: true,
+
+    anatomicalRegion: true,
+    energySystem: true,
+
+    load: true,
+    intensity: true,
+    volume: true,
+  })
+  .extend({
+    year: z.number().int().optional(),
+  })
+  .partial()
+  .optional()
+
+export type OptionalTrainingFilter = z.infer<
+  typeof optionalTrainingFilterSchema
+>

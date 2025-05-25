@@ -2,7 +2,7 @@ import { oc as orpcContract } from '@orpc/contract'
 import {
   ascentQueryParams,
   optionalAscentFilterSchema,
-} from '@repo/db-schema/helpers/ascent'
+} from '@repo/db-schema/schema/ascent'
 import {
   ascentInsertSchema,
   ascentSelectSchema,

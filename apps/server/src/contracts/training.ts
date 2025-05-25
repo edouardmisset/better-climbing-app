@@ -1,5 +1,5 @@
 import { oc as orpcContract } from '@orpc/contract'
-import { optionalTrainingFilterSchema } from '@repo/db-schema/helpers/training'
+import { optionalTrainingFilterSchema } from '@repo/db-schema/schema/training'
 import {
   trainingSessionInsertSchema,
   trainingSessionSelectSchema,
