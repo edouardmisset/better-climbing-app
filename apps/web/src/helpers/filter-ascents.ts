@@ -2,7 +2,7 @@ import { DEFAULT_GRADE } from '@/constants/ascents'
 import { isDateInYear } from '@edouardmisset/date'
 import { objectKeys, objectSize } from '@edouardmisset/object'
 import { stringEqualsCaseInsensitive } from '@edouardmisset/text'
-import type { OptionalAscentFilter } from '@repo/db-schema/helpers/ascent'
+import type { OptionalAscentFilter } from '@repo/db-schema/schema/ascent'
 import type { Ascent } from '@repo/db-schema/schema/ascent'
 import { frequencyBy } from './frequency-by'
 import { fromGradeToNumber } from './grade-converter'
@@ -41,17 +41,17 @@ export function filterAscents(
 
   return ascents.filter(
     ascent =>
-      (topoGrade === undefined ||
+      (topoGrade == null ||
         stringEqualsCaseInsensitive(ascent.topoGrade, topoGrade)) &&
-      (discipline === undefined || ascent.discipline === discipline) &&
-      (year === undefined || isDateInYear(ascent.date, year)) &&
-      (style === undefined || ascent.style === style) &&
-      (profile === undefined || ascent.profile === profile) &&
-      (rating === undefined || ascent.rating === rating) &&
-      (height === undefined || ascent.height === height) &&
-      (holds === undefined || ascent.holds === holds) &&
-      (tries === undefined || ascent.tries === tries) &&
-      (crag === undefined || stringEqualsCaseInsensitive(ascent.crag, crag)),
+      (discipline == null || ascent.discipline === discipline) &&
+      (year == null || isDateInYear(ascent.date, year)) &&
+      (style == null || ascent.style === style) &&
+      (profile == null || ascent.profile === profile) &&
+      (rating == null || ascent.rating === rating) &&
+      (height == null || ascent.height === height) &&
+      (holds == null || ascent.holds === holds) &&
+      (tries == null || ascent.tries === tries) &&
+      (crag == null || stringEqualsCaseInsensitive(ascent.crag, crag)),
   )
 }
 
@@ -76,7 +76,11 @@ export function getCragsDetails(ascents: Ascent[]): {
   mostFrequentCrag: string | undefined
   crags: Ascent['crag'][]
 } {
-  const cragsByFrequency = frequencyBy(ascents, 'crag', { ascending: false })
+  const cragsByFrequency = frequencyBy(
+    ascents.map(({ crag }) => ({ crag })),
+    'crag',
+    { ascending: false },
+  )
   const crags = objectKeys(cragsByFrequency)
   const [mostFrequentCrag] = crags
 

@@ -1,8 +1,8 @@
 import { getAscentsFromGS } from '@repo/google-sheets/ascent'
 import { getTrainingSessionsFromDB as getTrainingSessionsFromGS } from '@repo/google-sheets/training'
 import { db } from '../index'
-import { ascent } from './schema/ascent'
-import { trainingSession } from './schema/training'
+import { ascentTable } from './schema/ascent'
+import { trainingSessionTable } from './schema/training'
 
 // Load all the ascents from google sheets
 // Load all the training sessions from Google Sheets
@@ -11,27 +11,21 @@ const trainingSessionsFromGS = await getTrainingSessionsFromGS()
 
 // Transform the data to fit the database schemas
 const ascentsToDB = ascentsFromGS.map(ascent => {
-  const { discipline, points, id, ...rest } = ascent
+  const { points, id, ...rest } = ascent
   return {
     ...rest,
-    discipline,
     points: points ?? fromAscentToPoints(ascent),
   }
 })
 
-const trainingSessionsToDB = trainingSessionsFromGS.map(
-  ({ id, discipline, sessionType, gymCrag, ...rest }) => ({
-    discipline,
-    location: gymCrag,
-    type: sessionType,
-    ...rest,
-  }),
-)
+const trainingSessionsToDB = trainingSessionsFromGS.map(({ id, ...rest }) => ({
+  ...rest,
+}))
 
 // Erase all the data in the database
-await db.delete(ascent)
-await db.delete(trainingSession)
+await db.delete(ascentTable)
+await db.delete(trainingSessionTable)
 
 // Insert the data into the database
-await db.insert(ascent).values(ascentsToDB)
-await db.insert(trainingSession).values(trainingSessionsToDB)
+await db.insert(ascentTable).values(ascentsToDB)
+await db.insert(trainingSessionTable).values(trainingSessionsToDB)

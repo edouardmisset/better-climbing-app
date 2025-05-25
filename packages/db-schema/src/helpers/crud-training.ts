@@ -1,11 +1,10 @@
 import { type SQL, and, eq } from 'drizzle-orm'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import { db } from '../../index'
 import {
   type TrainingSession,
   type TrainingSessionInsert,
-  trainingSession,
-  trainingSessionSelectSchema,
+  trainingSessionTable,
 } from '../schema/training'
 
 export const optionalTrainingFilterSchema = z
@@ -46,20 +45,22 @@ export async function getTrainingSessions(options: OptionalTrainingFilter) {
   const filters: SQL[] = []
 
   if (anatomicalRegion != null)
-    filters.push(eq(trainingSession.anatomicalRegion, anatomicalRegion))
+    filters.push(eq(trainingSessionTable.anatomicalRegion, anatomicalRegion))
   if (discipline != null)
-    filters.push(eq(trainingSession.discipline, discipline))
+    filters.push(eq(trainingSessionTable.discipline, discipline))
   if (energySystem != null)
-    filters.push(eq(trainingSession.energySystem, energySystem))
-  if (location != null) filters.push(eq(trainingSession.location, location))
-  if (intensity != null) filters.push(eq(trainingSession.intensity, intensity))
-  if (load != null) filters.push(eq(trainingSession.load, load))
-  if (type != null) filters.push(eq(trainingSession.type, type))
-  if (volume != null) filters.push(eq(trainingSession.volume, volume))
+    filters.push(eq(trainingSessionTable.energySystem, energySystem))
+  if (location != null)
+    filters.push(eq(trainingSessionTable.location, location))
+  if (intensity != null)
+    filters.push(eq(trainingSessionTable.intensity, intensity))
+  if (load != null) filters.push(eq(trainingSessionTable.load, load))
+  if (type != null) filters.push(eq(trainingSessionTable.type, type))
+  if (volume != null) filters.push(eq(trainingSessionTable.volume, volume))
 
   const filteredSessions = await db
     .select()
-    .from(trainingSession)
+    .from(trainingSessionTable)
     .where(and(...filters))
 
   return year == null
@@ -72,13 +73,13 @@ export async function getTrainingSessions(options: OptionalTrainingFilter) {
 export async function insertTrainingSession(
   ...sessions: TrainingSessionInsert[]
 ) {
-  return await db.insert(trainingSession).values(sessions).returning()
+  return await db.insert(trainingSessionTable).values(sessions).returning()
 }
 
 export async function getTrainingSessionById(id: TrainingSession['id']) {
   return await db
     .select()
-    .from(trainingSession)
-    .where(eq(trainingSession.id, id))
+    .from(trainingSessionTable)
+    .where(eq(trainingSessionTable.id, id))
     .limit(1)
 }

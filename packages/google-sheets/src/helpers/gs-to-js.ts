@@ -1,5 +1,5 @@
 import { isValidNumber } from '@edouardmisset/math/is-valid.ts'
-import { holdsFomGSSchema } from '../constants/ascent.js'
+import { holdsFromGSSchema } from '../constants/ascent.js'
 import type { JSAscentKeys, JSTrainingKeys } from './headers.ts'
 
 /* ---------------------------------------------
@@ -88,7 +88,7 @@ const transformSessionTypeGSToJS: TransformFunctionGSToJS = value =>
  * @returns {string} - The filtered climbing hold type.
  */
 const transformHoldsGSToJS: TransformFunctionGSToJS = value => {
-  const parsedValue = holdsFomGSSchema.safeParse(value)
+  const parsedValue = holdsFromGSSchema.safeParse(value)
 
   if (!parsedValue.success) {
     globalThis.console.error(parsedValue.error)

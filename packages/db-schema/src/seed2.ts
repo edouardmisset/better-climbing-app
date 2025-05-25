@@ -2,8 +2,8 @@ import { getAscentsFromGS } from '@repo/google-sheets/ascent'
 import { getTrainingSessionsFromDB as getTrainingSessionsFromGS } from '@repo/google-sheets/training'
 import { sql } from 'drizzle-orm'
 import { db } from '..'
-import { ascent } from './schema/ascent'
-import { trainingSession } from './schema/training'
+import { ascentTable } from './schema/ascent'
+import { trainingSessionTable } from './schema/training'
 
 /**
  * Configuration options for the seeding process
@@ -236,7 +236,7 @@ async function seedDatabase(
       // Clear existing data
       if (options.seedAscents) {
         const deletedAscents = await executeDbOperation(
-          () => tx.delete(ascent),
+          () => tx.delete(ascentTable),
           'delete existing ascents',
           logger,
         )
@@ -247,7 +247,7 @@ async function seedDatabase(
 
       if (options.seedTrainingSessions) {
         const deletedTrainings = await executeDbOperation(
-          () => tx.delete(trainingSession),
+          () => tx.delete(trainingSessionTable),
           'delete existing training sessions',
           logger,
         )
@@ -261,7 +261,7 @@ async function seedDatabase(
         for (let i = 0; i < transformedAscents.length; i += options.batchSize) {
           const batch = transformedAscents.slice(i, i + options.batchSize)
           await executeDbOperation(
-            () => tx.insert(ascent).values(batch),
+            () => tx.insert(ascentTable).values(batch),
             `insert ascents batch ${Math.floor(i / options.batchSize) + 1}`,
             logger,
           )
@@ -277,7 +277,7 @@ async function seedDatabase(
         ) {
           const batch = transformedTrainings.slice(i, i + options.batchSize)
           await executeDbOperation(
-            () => tx.insert(trainingSession).values(batch),
+            () => tx.insert(trainingSessionTable).values(batch),
             `insert training sessions batch ${Math.floor(i / options.batchSize) + 1}`,
             logger,
           )
@@ -294,14 +294,14 @@ async function seedDatabase(
     const ascentCount = options.seedAscents
       ? await db
           .select({ count: sql`count(*)` })
-          .from(ascent)
+          .from(ascentTable)
           .then(res => Number(res[0]?.count))
       : 0
 
     const trainingCount = options.seedTrainingSessions
       ? await db
           .select({ count: sql`count(*)` })
-          .from(trainingSession)
+          .from(trainingSessionTable)
           .then(res => Number(res[0]?.count))
       : 0
 

@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from 'zod/v4'
 
 export const HOLDS_FROM_GS = [
   'Positive',
@@ -15,4 +15,4 @@ export const HOLDS_FROM_GS = [
   'Undercling',
 ] as const
 
-export const holdsFomGSSchema = z.enum(HOLDS_FROM_GS)
+export const holdsFromGSSchema = z.enum(HOLDS_FROM_GS)

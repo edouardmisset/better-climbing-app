@@ -50,7 +50,7 @@ const _sessionTypeSchema = z.enum(SESSION_TYPES)
 const _energySystemSchema = z.enum(ENERGY_SYSTEMS)
 const _anatomicalRegionSchema = z.enum(ANATOMICAL_REGIONS)
 
-export const trainingSession = table('training_session', {
+export const trainingSessionTable = table('training_session', {
   id: integer({ mode: 'number' }).primaryKey({ autoIncrement: true }).unique(),
   anatomicalRegion: text('anatomical_region', { enum: ANATOMICAL_REGIONS }),
   discipline: text('discipline', { enum: DISCIPLINE }),
@@ -65,7 +65,8 @@ export const trainingSession = table('training_session', {
 })
 
 const trainingSessionRefinements: BuildRefine<
-  (typeof trainingSession)['_']['columns']
+  (typeof trainingSessionTable)['_']['columns'],
+  undefined
 > = {
   anatomicalRegion: schema => schema.optional(),
   discipline: schema => schema.optional(),
@@ -81,22 +82,22 @@ const trainingSessionRefinements: BuildRefine<
 }
 
 export const trainingSessionSelectSchema = createSelectSchema(
-  trainingSession,
+  trainingSessionTable,
   trainingSessionRefinements,
 )
 
-export type TrainingSession = typeof trainingSessionSelectSchema._type
+export type TrainingSession = z.infer<typeof trainingSessionSelectSchema>
 
 export const trainingSessionInsertSchema = createInsertSchema(
-  trainingSession,
+  trainingSessionTable,
   trainingSessionRefinements,
 )
 
-export type TrainingSessionInsert = typeof trainingSessionInsertSchema._type
+export type TrainingSessionInsert = z.infer<typeof trainingSessionInsertSchema>
 
 export const trainingSessionUpdateSchema = createUpdateSchema(
-  trainingSession,
+  trainingSessionTable,
   trainingSessionRefinements,
 )
 
-export type TrainingSessionUpdate = typeof trainingSessionUpdateSchema._type
+export type TrainingSessionUpdate = z.infer<typeof trainingSessionUpdateSchema>

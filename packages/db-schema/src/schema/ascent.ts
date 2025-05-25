@@ -1,3 +1,4 @@
+import { validNumberWithFallback } from '@edouardmisset/math'
 import { sql } from 'drizzle-orm'
 import { integer, sqliteTable as table, text } from 'drizzle-orm/sqlite-core'
 import {
@@ -6,6 +7,7 @@ import {
   createSelectSchema,
   createUpdateSchema,
 } from 'drizzle-zod'
+import { z } from 'zod/v4'
 import {
   ASCENT_STYLE,
   DISCIPLINE,
@@ -14,7 +16,7 @@ import {
   _GRADES,
 } from '../constants/ascent'
 
-export const ascent = table('ascent', {
+export const ascentTable = table('ascent', {
   id: integer({ mode: 'number' }).primaryKey({ autoIncrement: true }).unique(),
   area: text({ mode: 'text' }),
   comments: text({ mode: 'text' }),
@@ -34,7 +36,10 @@ export const ascent = table('ascent', {
   tries: integer({ mode: 'number' }).notNull(),
 })
 
-const ascentSchemaRefinements: BuildRefine<(typeof ascent)['_']['columns']> = {
+const ascentSchemaRefinements: BuildRefine<
+  (typeof ascentTable)['_']['columns'],
+  undefined
+> = {
   area: schema => schema.optional(),
   comments: schema => schema.optional(),
   crag: schema => schema.min(1),
@@ -54,22 +59,46 @@ const ascentSchemaRefinements: BuildRefine<(typeof ascent)['_']['columns']> = {
 } as const
 
 export const ascentSelectSchema = createSelectSchema(
-  ascent,
+  ascentTable,
   ascentSchemaRefinements,
 )
 
-export type Ascent = typeof ascentSelectSchema._type
+export type Ascent = z.infer<typeof ascentSelectSchema>
 
 export const ascentInsertSchema = createInsertSchema(
-  ascent,
+  ascentTable,
   ascentSchemaRefinements,
 )
 
-export type AscentInsert = typeof ascentInsertSchema._type
+export type AscentInsert = z.infer<typeof ascentInsertSchema>
 
 export const ascentUpdateSchema = createUpdateSchema(
-  ascent,
+  ascentTable,
   ascentSchemaRefinements,
 )
 
-export type AscentUpdate = typeof ascentUpdateSchema._type
+export type AscentUpdate = z.infer<typeof ascentUpdateSchema>
+
+export const ascentQueryParams = z.object({
+  query: z.string().min(1),
+  limit: z.string().transform(val => validNumberWithFallback(val, 10)),
+})
+export type AscentQueryParams = z.infer<typeof ascentQueryParams>
+
+export const optionalAscentFilterSchema = z
+  .object({
+    discipline: ascentSelectSchema.shape.discipline,
+    crag: ascentSelectSchema.shape.crag,
+    topoGrade: ascentSelectSchema.shape.topoGrade,
+    height: ascentSelectSchema.shape.height,
+    holds: ascentSelectSchema.shape.holds,
+    profile: ascentSelectSchema.shape.profile,
+    style: ascentSelectSchema.shape.style,
+    tries: ascentSelectSchema.shape.tries,
+    rating: ascentSelectSchema.shape.rating,
+    year: z.number().int(),
+  })
+  .partial()
+  .optional()
+
+export type OptionalAscentFilter = z.infer<typeof optionalAscentFilterSchema>
