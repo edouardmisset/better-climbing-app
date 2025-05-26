@@ -1,4 +1,6 @@
 import 'dotenv/config'
+import { writeFileSync } from 'node:fs'
+import { OpenAPIGenerator } from '@orpc/openapi'
 import { OpenAPIHandler } from '@orpc/openapi/fetch'
 import { OpenAPIReferencePlugin } from '@orpc/openapi/plugins'
 import { onError } from '@orpc/server'
@@ -6,7 +8,6 @@ import { BatchHandlerPlugin, CORSPlugin } from '@orpc/server/plugins'
 import { ZodSmartCoercionPlugin, ZodToJsonSchemaConverter } from '@orpc/zod'
 import { auth } from '@repo/db-schema/auth'
 import { Hono } from 'hono'
-import { compress } from 'hono/compress'
 import { cors } from 'hono/cors'
 import { csrf } from 'hono/csrf'
 import { etag } from 'hono/etag'
@@ -20,6 +21,11 @@ const ENV = process.env.ENV || 'production'
 
 const app = new Hono()
 
+const specInfo = {
+  title: 'Climbing API',
+  version: '0.1.0',
+}
+
 const handler = new OpenAPIHandler(router, {
   plugins: [
     new CORSPlugin({ exposeHeaders: ['Content-Disposition'] }),
@@ -27,10 +33,7 @@ const handler = new OpenAPIHandler(router, {
     new OpenAPIReferencePlugin({
       schemaConverters: [new ZodToJsonSchemaConverter()],
       specGenerateOptions: {
-        info: {
-          title: 'Climbing API',
-          version: '0.1.0',
-        },
+        info: specInfo,
       },
     }),
     new BatchHandlerPlugin(),
@@ -69,7 +72,17 @@ app
     return c.json({ message: notFoundMessage }, 404)
   })
 
-if (ENV === 'production') app.use(etag({ weak: true }), csrf(), compress())
+if (ENV === 'production') app.use(etag({ weak: true }), csrf())
 if (ENV === 'development') app.use(timing(), logger())
+
+const generator = new OpenAPIGenerator({
+  schemaConverters: [new ZodToJsonSchemaConverter()],
+})
+
+const spec = await generator.generate(router, {
+  info: specInfo,
+})
+
+writeFileSync('../openapi.json', JSON.stringify(spec, null, 2))
 
 export default app
