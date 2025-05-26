@@ -1,3 +1,5 @@
+import type { Ascent } from '../schema/ascent'
+
 export const _GRADES = [
   '1a',
   '1a+',
@@ -195,3 +197,10 @@ export const PROFILES = [
 ] as const
 export const DISCIPLINE = ['Route', 'Boulder', 'Multi-Pitch'] as const
 export const ASCENT_STYLE = ['Onsight', 'Flash', 'Redpoint'] as const
+
+const UNAVAILABLE_CLIMBING_DISCIPLINE: Set<Ascent['discipline']> = new Set([
+  'Multi-Pitch',
+])
+export const AVAILABLE_CLIMBING_DISCIPLINE = DISCIPLINE.filter(
+  d => !UNAVAILABLE_CLIMBING_DISCIPLINE.has(d),
+)

@@ -1,6 +1,7 @@
 import { QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { Loader } from 'lucide-react'
+import { NuqsAdapter } from 'nuqs/adapters/react-router/v7'
 import { Suspense, useCallback, useEffect, useState } from 'react'
 import {
   Links,
@@ -99,7 +100,9 @@ export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ORPCContext.Provider value={orpc}>
-        <Outlet />
+        <NuqsAdapter>
+          <Outlet />
+        </NuqsAdapter>
       </ORPCContext.Provider>
       <ReactQueryDevtools position="bottom" buttonPosition="bottom-right" />
     </QueryClientProvider>

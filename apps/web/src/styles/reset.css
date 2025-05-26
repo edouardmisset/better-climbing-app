@@ -123,17 +123,9 @@
 }
 
 :where(a) {
-  color: var(--violet-9);
+  color: var(--link);
   font-weight: var(--font-weight-5);
   text-underline-offset: 0.2em;
-}
-
-:where(a:hover) {
-  color: var(--violet-7);
-}
-
-:where(a:visited) {
-  color: var(--violet-7);
 }
 
 /* A elements that don't have a class get default styles */
@@ -141,6 +133,20 @@
   text-decoration-skip-ink: auto;
   text-decoration-thickness: max(0.08em, 1px);
   color: currentcolor;
+}
+
+:where(a[href]) {
+  color: var(--link);
+  text-decoration-color: var(--link);
+}
+
+:where(a[href]:visited) {
+  color: var(--link-visited);
+  text-decoration-color: var(--link-visited);
+}
+
+:where(a):where(:not(:hover)) {
+  text-decoration: inherit;
 }
 
 /* Progressive enhancements */
@@ -234,14 +240,6 @@ not to see them */
   color: var(--red-9);
   font-size: 1em;
   vertical-align: super;
-}
-
-:where(a[href]) {
-  color: var(--link);
-}
-
-:where(a[href]):where(:visited) {
-  color: var(--link-visited);
 }
 
 :focus-visible {
@@ -347,18 +345,6 @@ not to see them */
   ) {
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
-}
-
-:where(a):where([href]) {
-  text-decoration-color: var(--link-color);
-}
-
-:where(a):where([href]):where(:visited) {
-  text-decoration-color: var(--link-visited);
-}
-
-:where(a):where(:not(:hover)) {
-  text-decoration: inherit;
 }
 
 :where(img, svg, video, canvas, audio, iframe, embed, object) {

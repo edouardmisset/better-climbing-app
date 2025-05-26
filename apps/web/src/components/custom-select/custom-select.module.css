@@ -1,0 +1,12 @@
+.label {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-fluid-1);
+  justify-content: center;
+  align-items: flex-start;
+  z-index: 0;
+}
+
+.select {
+  inline-size: 10ch;
+}

@@ -1,3 +1,5 @@
+export const ALL_VALUE = 'All'
+
 export const US_LOCALE = 'en-US'
 export const FR_LOCALE = 'fr-FR'
 
